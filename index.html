@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deutsch Learning Platform</title>
+  <meta name="description" content="German A1 grammar notes and learning references.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f5ef;
+      --ink: #202124;
+      --muted: #64615a;
+      --line: #ded8cb;
+      --panel: #fffdf8;
+      --accent: #ba2d2d;
+      --accent-2: #0f6b5f;
+      --table: #f1ede4;
+      --shadow: 0 18px 50px rgba(48, 42, 32, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .hero {
+      min-height: 58vh;
+      display: grid;
+      align-items: end;
+      background:
+        linear-gradient(180deg, rgba(18, 23, 28, 0.16), rgba(18, 23, 28, 0.74)),
+        url("https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1800&q=80") center/cover;
+      color: #fff;
+    }
+
+    .hero-inner,
+    main,
+    .footer-inner {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero-inner {
+      padding: 76px 0 44px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(2.45rem, 6vw, 5.9rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero p:last-child {
+      max-width: 680px;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.08rem;
+    }
+
+    main {
+      padding: 28px 0 72px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 20px 0 32px;
+    }
+
+    .note-nav {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .note-nav a,
+    .resource-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.78);
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .note-nav span {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .updated {
+      color: var(--muted);
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .resources {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0;
+      margin-bottom: 30px;
+    }
+
+    .resources h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .note {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 48px);
+    }
+
+    .note + .note {
+      margin-top: 28px;
+    }
+
+    .note-header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 22px;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--accent-2);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .note-header h2 {
+      margin: 0;
+      font-size: clamp(1.65rem, 3vw, 2.7rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 8px 14px;
+      padding: 16px;
+      margin-bottom: 32px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8f3e9;
+    }
+
+    .toc a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      text-decoration: none;
+    }
+
+    .toc .level-3 {
+      padding-left: 14px;
+    }
+
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4 {
+      color: #191b1d;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .markdown-body h2 {
+      margin: 38px 0 14px;
+      font-size: 1.65rem;
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+    }
+
+    .markdown-body h2:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .markdown-body h3 {
+      margin: 28px 0 10px;
+      font-size: 1.28rem;
+    }
+
+    .markdown-body h4 {
+      margin: 22px 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .markdown-body p,
+    .markdown-body ul,
+    .markdown-body ol,
+    .markdown-body blockquote {
+      margin: 0 0 16px;
+    }
+
+    .markdown-body ul,
+    .markdown-body ol {
+      padding-left: 1.45rem;
+    }
+
+    blockquote {
+      border-left: 4px solid var(--accent);
+      background: #fff5ec;
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      color: #443b32;
+    }
+
+    code {
+      padding: 0.15em 0.35em;
+      border-radius: 6px;
+      background: #eee7d9;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    hr {
+      height: 1px;
+      border: 0;
+      background: var(--line);
+      margin: 28px 0;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 18px 0 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--table);
+      color: #292621;
+      font-weight: 800;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th:last-child,
+    td:last-child {
+      border-right: 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 0;
+      color: var(--muted);
+      background: #ede8dd;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        min-height: 50vh;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .updated {
+        white-space: normal;
+      }
+
+      .note {
+        padding: 20px 16px;
+      }
+
+      table {
+        min-width: 620px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Deutsch A1 Notes</p>
+      <h1>Deutsch Learning Platform</h1>
+      <p>German grammar notes organized for quick review, with examples, declension tables, and Perfekt patterns.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="topbar" aria-label="Notes navigation">
+      <nav class="note-nav"><a href="#note-0"><span>06/16</span>德语 A1 语法复习：支配三格/四格的介词 &amp; 现在完成时</a></nav>
+      <div class="updated">Updated 2026-06-21</div>
+    </section>
+
+    <article class="note" id="note-0">
+      <header class="note-header">
+        <p class="kicker">0616语法-介词及现在完成时-deepseek.md</p>
+        <h2>德语 A1 语法复习：支配三格/四格的介词 &amp; 现在完成时</h2>
+      </header>
+      <nav class="toc" aria-label="德语 A1 语法复习：支配三格/四格的介词 &amp; 现在完成时 table of contents"><a class="level-2" href="#一-支配第三格-第四格的介词与常见用法">一、支配第三格 / 第四格的介词与常见用法</a><a class="level-3" href="#1-只支配第三格的介词-präpositionen-mit-dativ">1. 只支配第三格的介词（Präpositionen mit Dativ）</a><a class="level-3" href="#2-只支配第四格的介词-präpositionen-mit-akkusativ">2. 只支配第四格的介词（Präpositionen mit Akkusativ）</a><a class="level-3" href="#补充-第三格与第四格基本变格规则">🔤 补充：第三格与第四格基本变格规则</a><a class="level-3" href="#3-支配三格或四格的介词-wechselpräpositionen">3. 支配三格或四格的介词（Wechselpräpositionen）⭐</a><a class="level-2" href="#二-现在完成时-perfekt">二、现在完成时（Perfekt）</a><a class="level-3" href="#1-基本结构">1. 基本结构</a><a class="level-3" href="#2-助动词-sein-还是-haben">2. 助动词 sein 还是 haben？</a><a class="level-3" href="#3-第二分词-partizip-ii-的构成">3. 第二分词（Partizip II）的构成</a><a class="level-3" href="#4-句式示例">4. 句式示例</a></nav>
+      <div class="markdown-body">
+        <blockquote>📌 <strong>适合水平</strong>：零基础 - A1<br>🎯 <strong>目标</strong>：快速回顾上节课核心语法，理清变格规则与现在完成时构成。</blockquote>
+<hr>
+<h2 id="一-支配第三格-第四格的介词与常见用法">一、支配第三格 / 第四格的介词与常见用法</h2>
+<p>德语介词会强制其后的名词或代词使用特定的格。这里重点复习以下三类：</p>
+<h3 id="1-只支配第三格的介词-präpositionen-mit-dativ">1. 只支配第三格的介词（Präpositionen mit Dativ）</h3>
+<p>这类介词后面<strong>永远</strong>跟第三格。</p>
+<div class="table-wrap"><table><thead><tr><th>介词</th><th>常见含义</th><th>例句</th></tr></thead><tbody><tr><td><strong>aus</strong></td><td>从…出来；来自</td><td>Ich komme <strong>aus der</strong> Türkei. / Das T-Shirt ist <strong>aus</strong> Baumwolle.</td></tr><tr><td><strong>bei</strong></td><td>在…附近；在…处</td><td>Ich wohne <strong>bei</strong> mein<strong>em</strong> Bruder. / Sie arbeitet <strong>bei</strong> Siemens.</td></tr><tr><td><strong>mit</strong></td><td>和…一起；用（工具）</td><td>Ich fahre <strong>mit dem</strong> Bus. / Kaffee <strong>mit</strong> Milch, bitte.</td></tr><tr><td><strong>nach</strong></td><td>去…（城市/国家）；在…之后</td><td>Wir fliegen <strong>nach</strong> Spanien. / <strong>Nach der</strong> Arbeit gehe ich einkaufen.</td></tr><tr><td><strong>seit</strong></td><td>自从（时间）</td><td>Ich lerne <strong>seit</strong> ein<strong>em</strong> Monat Deutsch.</td></tr><tr><td><strong>von</strong></td><td>从…来；（所属）</td><td>Das Geschenk ist <strong>von</strong> mein<strong>er</strong> Mutter. / Ich komme <strong>vom</strong> (von dem) Arzt.</td></tr><tr><td><strong>zu</strong></td><td>去…（人/场所）；在…时候</td><td>Ich gehe <strong>zu</strong> mein<strong>em</strong> Freund. / <strong>Zum</strong> (zu dem) Frühstück trinke ich Tee.</td></tr><tr><td><strong>gegenüber</strong></td><td>在…对面</td><td>Die Bank ist <strong>dem</strong> Bahnhof <strong>gegenüber</strong>. <em>(常后置)</em></td></tr></tbody></table></div>
+<h3 id="2-只支配第四格的介词-präpositionen-mit-akkusativ">2. 只支配第四格的介词（Präpositionen mit Akkusativ）</h3>
+<p>这类介词后面<strong>永远</strong>跟第四格。</p>
+<div class="table-wrap"><table><thead><tr><th>介词</th><th>常见含义</th><th>例句</th></tr></thead><tbody><tr><td><strong>durch</strong></td><td>穿过</td><td>Wir spazieren <strong>durch den</strong> Park.</td></tr><tr><td><strong>für</strong></td><td>为了；给</td><td>Die Blumen sind <strong>für meinen</strong> Vater.</td></tr><tr><td><strong>ohne</strong></td><td>没有</td><td>Er geht <strong>ohne sein</strong> Handy aus.</td></tr><tr><td><strong>um</strong></td><td>环绕；在…点（钟）</td><td>Wir sitzen <strong>um den</strong> Tisch. / Der Kurs beginnt <strong>um</strong> 9 Uhr.</td></tr><tr><td><strong>gegen</strong></td><td>反对；大约（时间/方向）</td><td>Er ist <strong>gegen den</strong> Plan. / Ich komme <strong>gegen</strong> 8 Uhr.</td></tr><tr><td><strong>bis</strong></td><td>直到（常不加冠词）</td><td>Bis morgen! / Der Zug fährt <strong>bis</strong> Köln.</td></tr><tr><td><strong>entlang</strong></td><td>沿着（多后置，前面用第四格）</td><td>Gehen Sie die Straße <strong>entlang</strong>.</td></tr></tbody></table></div>
+<blockquote>🔑 小口诀：<strong>durch, für, ohne, um, gegen, bis – 只用四格记心里</strong>。</blockquote>
+<hr>
+<h3 id="补充-第三格与第四格基本变格规则">🔤 补充：第三格与第四格基本变格规则</h3>
+<p>介词后的名词/代词必须用对格，需要先掌握下列基本变格形式。</p>
+<h4 id="定冠词-der-das-die">定冠词（der/das/die）</h4>
+<div class="table-wrap"><table><thead><tr><th>格</th><th>阳性 (der)</th><th>中性 (das)</th><th>阴性 (die)</th><th>复数 (die)</th></tr></thead><tbody><tr><td>第三格 (Dativ)</td><td><strong>dem</strong></td><td><strong>dem</strong></td><td><strong>der</strong></td><td><strong>den</strong> (+ n)</td></tr><tr><td>第四格 (Akkusativ)</td><td><strong>den</strong></td><td><strong>das</strong></td><td><strong>die</strong></td><td><strong>die</strong></td></tr></tbody></table></div>
+<h4 id="不定冠词-ein-eine-否定冠词-kein-keine">不定冠词（ein/eine）&amp; 否定冠词（kein/keine）</h4>
+<div class="table-wrap"><table><thead><tr><th>格</th><th>阳性</th><th>中性</th><th>阴性</th><th>复数 (keine)</th></tr></thead><tbody><tr><td>第三格 (Dativ)</td><td>einem / keinem</td><td>einem / keinem</td><td>einer / keiner</td><td>keinen (+ n)</td></tr><tr><td>第四格 (Akkusativ)</td><td>einen / keinen</td><td>ein / kein</td><td>eine / keine</td><td>keine</td></tr></tbody></table></div>
+<h4 id="物主冠词-mein-dein-sein-与否定冠词-kein-变格相同">物主冠词（mein, dein, sein…）与否定冠词 kein 变格相同</h4>
+<p>例：mit <strong>meinem</strong> Bruder (三格阳), für <strong>meine</strong> Mutter (四格阴)</p>
+<h4 id="人称代词">人称代词</h4>
+<div class="table-wrap"><table><thead><tr><th>人称</th><th>第三格 (Dativ)</th><th>第四格 (Akkusativ)</th></tr></thead><tbody><tr><td>ich</td><td>mir</td><td>mich</td></tr><tr><td>du</td><td>dir</td><td>dich</td></tr><tr><td>er</td><td>ihm</td><td>ihn</td></tr><tr><td>es</td><td>ihm</td><td>es</td></tr><tr><td>sie (她)</td><td>ihr</td><td>sie</td></tr><tr><td>wir</td><td>uns</td><td>uns</td></tr><tr><td>ihr</td><td>euch</td><td>euch</td></tr><tr><td>sie (他们)</td><td>ihnen</td><td>sie</td></tr><tr><td>Sie (您/您们)</td><td>Ihnen</td><td>Sie</td></tr></tbody></table></div>
+<hr>
+<h3 id="3-支配三格或四格的介词-wechselpräpositionen">3. 支配三格或四格的介词（Wechselpräpositionen）⭐</h3>
+<p>这类介词也叫“动四静三”介词。同一个介词，根据表达含义的不同，决定用三格还是四格。</p>
+<ul><li><strong>Wo?</strong>（在哪里？）表示<strong>位置、静态</strong> → <strong>第三格（Dativ）</strong></li><li><strong>Wohin?</strong>（去哪里？）表示<strong>方向、动态</strong> → <strong>第四格（Akkusativ）</strong></li></ul>
+<p><strong>9大“静三动四”介词：</strong> <code>an, auf, hinter, in, neben, über, unter, vor, zwischen</code></p>
+<div class="table-wrap"><table><thead><tr><th>介词</th><th>静三 (Dativ) – Wo?</th><th>动四 (Akkusativ) – Wohin?</th></tr></thead><tbody><tr><td><strong>an</strong> (在…旁边/接触)</td><td>Das Bild hängt <strong>an der</strong> Wand.</td><td>Ich hänge das Bild <strong>an die</strong> Wand.</td></tr><tr><td><strong>auf</strong> (在…上面)</td><td>Das Buch liegt <strong>auf dem</strong> Tisch.</td><td>Ich lege das Buch <strong>auf den</strong> Tisch.</td></tr><tr><td><strong>hinter</strong> (在…后面)</td><td>Der Ball ist <strong>hinter dem</strong> Sofa.</td><td>Der Ball rollt <strong>hinter das</strong> Sofa.</td></tr><tr><td><strong>in</strong> (在…里面)</td><td>Ich bin <strong>in dem (im)</strong> Büro.</td><td>Ich gehe <strong>in das (ins)</strong> Büro.</td></tr><tr><td><strong>neben</strong> (在…旁边)</td><td>Die Lampe steht <strong>neben dem</strong> Bett.</td><td>Stell die Lampe <strong>neben das</strong> Bett.</td></tr><tr><td><strong>über</strong> (在…上方)</td><td>Das Bild hängt <strong>über dem</strong> Sofa.</td><td>Ich hänge das Bild <strong>über das</strong> Sofa.</td></tr><tr><td><strong>unter</strong> (在…下面)</td><td>Die Katze sitzt <strong>unter dem</strong> Stuhl.</td><td>Die Katze kriecht <strong>unter den</strong> Stuhl.</td></tr><tr><td><strong>vor</strong> (在…前面)</td><td>Das Auto steht <strong>vor dem</strong> Haus.</td><td>Ich fahre das Auto <strong>vor das</strong> Haus.</td></tr><tr><td><strong>zwischen</strong> (在…之间)</td><td>Die Vase steht <strong>zwischen den</strong> Büchern.</td><td>Ich stelle die Vase <strong>zwischen die</strong> Bücher.</td></tr></tbody></table></div>
+<blockquote>⚠️ 常用缩写：<br><code>in dem = im</code>  <code>in das = ins</code><br><code>an dem = am</code>  <code>an das = ans</code><br><code>auf das = aufs</code>  <code>zu dem = zum</code>  <code>zu der = zur</code></blockquote>
+<hr>
+<h2 id="二-现在完成时-perfekt">二、现在完成时（Perfekt）</h2>
+<p>现在完成时是德语口语中<strong>最常用</strong>的过去时态，用来描述已经发生的动作。</p>
+<h3 id="1-基本结构">1. 基本结构</h3>
+<blockquote><strong>haben / sein + Partizip II (第二分词)</strong></blockquote>
+<p>助动词在句子第二位根据主语变位，第二分词放在<strong>句末</strong>。</p>
+<div class="table-wrap"><table><thead><tr><th></th><th>位置2 (助动词)</th><th>...</th><th>句末 (第二分词)</th></tr></thead><tbody><tr><td>Ich</td><td><strong>habe</strong></td><td>einen Apfel</td><td><strong>gegessen</strong>.</td></tr><tr><td>Er</td><td><strong>ist</strong></td><td>nach Hause</td><td><strong>gegangen</strong>.</td></tr></tbody></table></div>
+<h3 id="2-助动词-sein-还是-haben">2. 助动词 sein 还是 haben？</h3>
+<div class="table-wrap"><table><thead><tr><th>用 <strong>sein</strong></th><th>用 <strong>haben</strong></th></tr></thead><tbody><tr><td>表示<strong>位置移动</strong>的不及物动词：gehen, fahren, kommen, laufen, fliegen...</td><td>绝大多数动词</td></tr><tr><td>表示<strong>状态变化</strong>：aufwachen, einschlafen, sterben, werden...</td><td>及物动词（带宾语）</td></tr><tr><td>特殊词：<strong>sein</strong>, <strong>bleiben</strong>, <strong>passieren</strong></td><td>反身动词</td></tr><tr><td>例：Er <strong>ist</strong> nach Berlin <strong>gefahren</strong>.</td><td>例：Ich <strong>habe</strong> ein Buch <strong>gelesen</strong>.</td></tr></tbody></table></div>
+<h3 id="3-第二分词-partizip-ii-的构成">3. 第二分词（Partizip II）的构成</h3>
+<h4 id="规则变化-弱变化-ge-词干-t">✅ 规则变化（弱变化）：ge + 词干 + t</h4>
+<p>（词干以 -t/-d 结尾时加 -et）</p>
+<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th></tr></thead><tbody><tr><td>machen</td><td>ge<strong>mach</strong>t</td><td>做</td></tr><tr><td>lernen</td><td>ge<strong>lern</strong>t</td><td>学习</td></tr><tr><td>kaufen</td><td>ge<strong>kauf</strong>t</td><td>购买</td></tr><tr><td>wohnen</td><td>ge<strong>wohn</strong>t</td><td>居住</td></tr><tr><td>spielen</td><td>ge<strong>spiel</strong>t</td><td>玩；演奏</td></tr><tr><td>hören</td><td>ge<strong>hör</strong>t</td><td>听</td></tr><tr><td>fragen</td><td>ge<strong>frag</strong>t</td><td>问</td></tr><tr><td>sagen</td><td>ge<strong>sag</strong>t</td><td>说</td></tr><tr><td>suchen</td><td>ge<strong>such</strong>t</td><td>寻找</td></tr><tr><td>arbeiten</td><td>ge<strong>arbeit</strong>et</td><td>工作</td></tr><tr><td>warten</td><td>ge<strong>wart</strong>et</td><td>等待</td></tr><tr><td>öffnen</td><td>ge<strong>öffn</strong>et</td><td>打开</td></tr></tbody></table></div>
+<h4 id="以-ieren-结尾的动词-不加-ge-直接-t">✅ 以 -ieren 结尾的动词（不加 ge，直接 + t）</h4>
+<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th></tr></thead><tbody><tr><td>studieren</td><td>studier<strong>t</strong></td><td>学习（大学）</td></tr><tr><td>telefonieren</td><td>telefonier<strong>t</strong></td><td>打电话</td></tr><tr><td>diskutieren</td><td>diskutier<strong>t</strong></td><td>讨论</td></tr><tr><td>probieren</td><td>probier<strong>t</strong></td><td>尝试；品尝</td></tr><tr><td>reservieren</td><td>reservier<strong>t</strong></td><td>预订</td></tr><tr><td>reparieren</td><td>reparier<strong>t</strong></td><td>修理</td></tr><tr><td>trainieren</td><td>trainier<strong>t</strong></td><td>训练</td></tr></tbody></table></div>
+<h4 id="可分动词-前缀-ge-词干-t">✅ 可分动词（前缀 + ge + 词干 + t）</h4>
+<p>（若词干不规则，则套用相应不规则形式）</p>
+<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th></tr></thead><tbody><tr><td>aufmachen</td><td><strong>auf</strong>ge<strong>mach</strong>t</td><td>打开</td></tr><tr><td>zumachen</td><td><strong>zu</strong>ge<strong>mach</strong>t</td><td>关上</td></tr><tr><td>einkaufen</td><td><strong>ein</strong>ge<strong>kauf</strong>t</td><td>购物</td></tr><tr><td>aufräumen</td><td><strong>auf</strong>ge<strong>räum</strong>t</td><td>整理</td></tr><tr><td>anrufen</td><td><strong>an</strong>ge<strong>rufen</strong></td><td>打电话（强变化词干）</td></tr><tr><td>fernsehen</td><td><strong>fern</strong>ge<strong>seh</strong>en</td><td>看电视（强变化词干）</td></tr><tr><td>mitbringen</td><td><strong>mit</strong>ge<strong>brach</strong>t</td><td>带来（bringen不规则）</td></tr><tr><td>abholen</td><td><strong>ab</strong>ge<strong>hol</strong>t</td><td>接；取</td></tr></tbody></table></div>
+<h4 id="常见不规则变化-强变化-必须熟记">✅ 常见不规则变化（强变化，必须熟记）</h4>
+<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th><th>例句</th></tr></thead><tbody><tr><td>essen</td><td>ge<strong>gess</strong>en</td><td>吃</td><td>Ich habe Pizza gegessen.</td></tr><tr><td>trinken</td><td>ge<strong>trunk</strong>en</td><td>喝</td><td>Was hast du getrunken?</td></tr><tr><td>schreiben</td><td>ge<strong>schrieb</strong>en</td><td>写</td><td>Er hat eine E-Mail geschrieben.</td></tr><tr><td>lesen</td><td>ge<strong>les</strong>en</td><td>阅读</td><td>Hast du das Buch gelesen?</td></tr><tr><td>sehen</td><td>ge<strong>seh</strong>en</td><td>看见</td><td>Wir haben einen Film gesehen.</td></tr><tr><td>nehmen</td><td>ge<strong>nomm</strong>en</td><td>拿；乘坐</td><td>Ich habe den Bus genommen.</td></tr><tr><td>sprechen</td><td>ge<strong>sproch</strong>en</td><td>说话</td><td>Wir haben Deutsch gesprochen.</td></tr><tr><td>helfen</td><td>ge<strong>holf</strong>en</td><td>帮助</td><td>Wer hat dir geholfen?</td></tr><tr><td>finden</td><td>ge<strong>fund</strong>en</td><td>找到</td><td>Ich habe den Schlüssel gefunden.</td></tr><tr><td>singen</td><td>ge<strong>sung</strong>en</td><td>唱歌</td><td>Er hat ein Lied gesungen.</td></tr><tr><td>schlafen</td><td>ge<strong>schlaf</strong>en</td><td>睡觉</td><td>Ich habe schlecht geschlafen.</td></tr><tr><td>fahren (ist)</td><td>ge<strong>fahr</strong>en</td><td>乘车/开车</td><td>Bist du mit dem Zug gefahren?</td></tr><tr><td>kommen (ist)</td><td>ge<strong>komm</strong>en</td><td>来</td><td>Wann bist du gekommen?</td></tr><tr><td>gehen (ist)</td><td>ge<strong>gang</strong>en</td><td>走；去</td><td>Sie ist ins Kino gegangen.</td></tr><tr><td>fliegen (ist)</td><td>ge<strong>flog</strong>en</td><td>飞；乘飞机</td><td>Er ist nach Rom geflogen.</td></tr><tr><td>laufen (ist)</td><td>ge<strong>lauf</strong>en</td><td>跑；走路</td><td>Ich bin 5 Kilometer gelaufen.</td></tr></tbody></table></div>
+<h3 id="4-句式示例">4. 句式示例</h3>
+<ul><li><strong>陈述句</strong>：Gestern <strong>habe</strong> ich meine Hausaufgaben <strong>gemacht</strong>. (我昨天做了作业。)</li><li><strong>完成时带情态动词较少见</strong>，A1阶段先掌握基本用法。</li><li><strong>否定词nicht</strong> 一般放在第二分词前：Ich habe ihn <strong>nicht</strong> gesehen.</li></ul>
+<hr>
+<blockquote>✨ <strong>复习建议</strong>：<br>1. 介词“静三动四”多通过实物位置练习，造句对比。<br>2. 将不规则动词的第二分词编成小故事或卡片反复记忆。<br>3. 用现在完成时写一篇日记，描述今天做了什么。<br>4. 牢记第三格和第四格定冠词、人称代词的变化，是正确使用介词的前提。</blockquote>
+<p>Viel Erfolg beim Deutschlernen! 📚</p>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner">Built from Markdown notes for GitHub Pages.</div>
+  </footer>
+</body>
+</html>
