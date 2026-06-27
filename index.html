@@ -4,19 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Deutsch Learning Platform</title>
-  <meta name="description" content="German A1 grammar notes and learning references.">
+  <meta name="description" content="German A1 notes organized by vocabulary, grammar, expressions, and quizzes.">
   <style>
     :root {
       color-scheme: light;
-      --bg: #f7f5ef;
+      --bg: #f6f3ec;
       --ink: #202124;
       --muted: #64615a;
       --line: #ded8cb;
       --panel: #fffdf8;
-      --accent: #ba2d2d;
+      --accent: #a83232;
       --accent-2: #0f6b5f;
       --table: #f1ede4;
-      --shadow: 0 18px 50px rgba(48, 42, 32, 0.1);
+      --chip: #e8f1ee;
+      --chip-active: #173f39;
+      --shadow: 0 16px 42px rgba(48, 42, 32, 0.09);
     }
 
     * {
@@ -39,12 +41,24 @@
       color: inherit;
     }
 
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .hero {
-      min-height: 58vh;
+      min-height: 42vh;
       display: grid;
       align-items: end;
       background:
-        linear-gradient(180deg, rgba(18, 23, 28, 0.16), rgba(18, 23, 28, 0.74)),
+        linear-gradient(180deg, rgba(18, 23, 28, 0.12), rgba(18, 23, 28, 0.76)),
         url("https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1800&q=80") center/cover;
       color: #fff;
     }
@@ -52,39 +66,39 @@
     .hero-inner,
     main,
     .footer-inner {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
 
     .hero-inner {
-      padding: 76px 0 44px;
+      padding: 70px 0 38px;
     }
 
     .eyebrow {
       margin: 0 0 12px;
       color: rgba(255, 255, 255, 0.82);
       font-size: 0.88rem;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
     }
 
     h1 {
       max-width: 900px;
       margin: 0;
-      font-size: clamp(2.45rem, 6vw, 5.9rem);
+      font-size: clamp(2.35rem, 5vw, 5rem);
       line-height: 1;
       letter-spacing: 0;
     }
 
     .hero p:last-child {
-      max-width: 680px;
-      margin: 22px 0 0;
+      max-width: 720px;
+      margin: 20px 0 0;
       color: rgba(255, 255, 255, 0.9);
-      font-size: 1.08rem;
+      font-size: 1.05rem;
     }
 
     main {
-      padding: 28px 0 72px;
+      padding: 26px 0 72px;
     }
 
     .topbar {
@@ -92,18 +106,17 @@
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 16px;
       align-items: center;
-      padding: 20px 0 32px;
+      padding: 18px 0 26px;
     }
 
-    .note-nav {
+    .source-nav {
       display: flex;
       gap: 10px;
       overflow-x: auto;
       padding-bottom: 4px;
     }
 
-    .note-nav a,
-    .resource-links a {
+    .source-nav a {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -111,13 +124,13 @@
       padding: 9px 13px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(255, 253, 248, 0.78);
+      background: rgba(255, 253, 248, 0.8);
       color: var(--ink);
       text-decoration: none;
       white-space: nowrap;
     }
 
-    .note-nav span {
+    .source-nav span {
       color: var(--accent);
       font-weight: 800;
     }
@@ -128,64 +141,129 @@
       white-space: nowrap;
     }
 
-    .resources {
-      border-top: 1px solid var(--line);
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 0 0 28px;
       border-bottom: 1px solid var(--line);
-      padding: 18px 0;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
-    .resources h2 {
-      margin: 0 0 12px;
-      font-size: 1rem;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .resource-links {
+    .filter-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .note {
-      background: var(--panel);
+    .filter-button,
+    .date-filter {
+      min-height: 40px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      box-shadow: var(--shadow);
-      padding: clamp(22px, 4vw, 48px);
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
     }
 
-    .note + .note {
-      margin-top: 28px;
+    .filter-button {
+      padding: 7px 13px;
+      cursor: pointer;
     }
 
-    .note-header {
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 22px;
-      margin-bottom: 24px;
+    .filter-button.is-active {
+      border-color: var(--chip-active);
+      background: var(--chip-active);
+      color: #fff;
+    }
+
+    .date-filter {
+      padding: 7px 32px 7px 12px;
+    }
+
+    .module-section {
+      margin-top: 34px;
+    }
+
+    .module-section[hidden],
+    .module-card[hidden] {
+      display: none;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1.15;
+      letter-spacing: 0;
     }
 
     .kicker {
       margin: 0 0 8px;
       color: var(--accent-2);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 800;
     }
 
-    .note-header h2 {
+    .module-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .module-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3vw, 34px);
+    }
+
+    .module-card-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+
+    .module-card-header h3 {
+      grid-column: 1;
       margin: 0;
-      font-size: clamp(1.65rem, 3vw, 2.7rem);
-      line-height: 1.15;
+      font-size: clamp(1.25rem, 2vw, 1.8rem);
+      line-height: 1.2;
       letter-spacing: 0;
+    }
+
+    .module-card-header span {
+      grid-row: 1 / span 2;
+      grid-column: 2;
+      align-self: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent-2);
+      font-size: 0.9rem;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .toc {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 8px 14px;
-      padding: 16px;
-      margin-bottom: 32px;
+      padding: 14px;
+      margin-bottom: 24px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #f8f3e9;
@@ -193,37 +271,29 @@
 
     .toc a {
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.93rem;
       text-decoration: none;
     }
 
-    .toc .level-3 {
+    .toc .level-4 {
       padding-left: 14px;
     }
 
-    .markdown-body h2,
     .markdown-body h3,
-    .markdown-body h4 {
+    .markdown-body h4,
+    .markdown-body h5 {
       color: #191b1d;
       line-height: 1.25;
       letter-spacing: 0;
     }
 
-    .markdown-body h2 {
-      margin: 38px 0 14px;
-      font-size: 1.65rem;
-      border-top: 1px solid var(--line);
-      padding-top: 28px;
-    }
-
-    .markdown-body h2:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
     .markdown-body h3 {
       margin: 28px 0 10px;
       font-size: 1.28rem;
+    }
+
+    .markdown-body h3:first-child {
+      margin-top: 0;
     }
 
     .markdown-body h4 {
@@ -305,6 +375,25 @@
       border-right: 0;
     }
 
+    .empty-state,
+    .empty-inline {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state {
+      display: none;
+      margin-top: 24px;
+    }
+
+    .empty-state.is-visible {
+      display: block;
+    }
+
     footer {
       border-top: 1px solid var(--line);
       padding: 24px 0;
@@ -314,18 +403,31 @@
 
     @media (max-width: 720px) {
       .hero {
-        min-height: 50vh;
+        min-height: 46vh;
       }
 
-      .topbar {
+      .topbar,
+      .filters,
+      .section-header,
+      .module-card-header {
         grid-template-columns: 1fr;
+      }
+
+      .module-card-header span {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: start;
+      }
+
+      .date-filter {
+        width: 100%;
       }
 
       .updated {
         white-space: normal;
       }
 
-      .note {
+      .module-card {
         padding: 20px 16px;
       }
 
@@ -340,83 +442,327 @@
     <div class="hero-inner">
       <p class="eyebrow">Deutsch A1 Notes</p>
       <h1>Deutsch Learning Platform</h1>
-      <p>German grammar notes organized for quick review, with examples, declension tables, and Perfekt patterns.</p>
+      <p>Vocabulary, grammar, expressions, and quizzes collected from dated German study notes.</p>
     </div>
   </header>
 
   <main>
     <section class="topbar" aria-label="Notes navigation">
-      <nav class="note-nav"><a href="#note-0"><span>06/16</span>德语 A1 语法复习：支配三格/四格的介词 &amp; 现在完成时</a></nav>
-      <div class="updated">Updated 2026-06-21</div>
+      <nav class="source-nav"><a href="#source-0-vocabulary"><span>06/16</span>德语 A1 复习笔记：介词与现在完成时</a><a href="#source-1-vocabulary"><span>06/25</span>德语 A1 复习笔记：交通方式、位置表达与序数词</a><a href="#source-2-vocabulary"><span>06/27</span>德语 A1 复习笔记：办公室物品、情态动词与日期表达</a></nav>
+      <div class="updated">Updated 2026-06-27</div>
     </section>
 
-    <article class="note" id="note-0">
-      <header class="note-header">
-        <p class="kicker">0616语法-介词及现在完成时-deepseek.md</p>
-        <h2>德语 A1 语法复习：支配三格/四格的介词 &amp; 现在完成时</h2>
+    <section class="filters" aria-label="Filter notes">
+      <div class="filter-group" role="group" aria-label="按模块筛选"><button class="filter-button is-active" type="button" data-module-filter="all">全部</button><button class="filter-button" type="button" data-module-filter="vocabulary">词汇</button><button class="filter-button" type="button" data-module-filter="grammar">语法</button><button class="filter-button" type="button" data-module-filter="expression">表达</button><button class="filter-button" type="button" data-module-filter="quiz">测试题</button></div>
+      <label>
+        <span class="sr-only">按日期筛选</span>
+        <select class="date-filter" aria-label="按日期筛选">
+          <option value="all">全部日期</option><option value="2026-06-16">2026-06-16</option><option value="2026-06-25">2026-06-25</option><option value="2026-06-27">2026-06-27</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="module-section" data-module-section="vocabulary" id="vocabulary">
+      <header class="section-header">
+        <p class="kicker">3 个内容块</p>
+        <h2>词汇模块</h2>
       </header>
-      <nav class="toc" aria-label="德语 A1 语法复习：支配三格/四格的介词 &amp; 现在完成时 table of contents"><a class="level-2" href="#一-支配第三格-第四格的介词与常见用法">一、支配第三格 / 第四格的介词与常见用法</a><a class="level-3" href="#1-只支配第三格的介词-präpositionen-mit-dativ">1. 只支配第三格的介词（Präpositionen mit Dativ）</a><a class="level-3" href="#2-只支配第四格的介词-präpositionen-mit-akkusativ">2. 只支配第四格的介词（Präpositionen mit Akkusativ）</a><a class="level-3" href="#补充-第三格与第四格基本变格规则">🔤 补充：第三格与第四格基本变格规则</a><a class="level-3" href="#3-支配三格或四格的介词-wechselpräpositionen">3. 支配三格或四格的介词（Wechselpräpositionen）⭐</a><a class="level-2" href="#二-现在完成时-perfekt">二、现在完成时（Perfekt）</a><a class="level-3" href="#1-基本结构">1. 基本结构</a><a class="level-3" href="#2-助动词-sein-还是-haben">2. 助动词 sein 还是 haben？</a><a class="level-3" href="#3-第二分词-partizip-ii-的构成">3. 第二分词（Partizip II）的构成</a><a class="level-3" href="#4-句式示例">4. 句式示例</a></nav>
-      <div class="markdown-body">
-        <blockquote>📌 <strong>适合水平</strong>：零基础 - A1<br>🎯 <strong>目标</strong>：快速回顾上节课核心语法，理清变格规则与现在完成时构成。</blockquote>
-<hr>
-<h2 id="一-支配第三格-第四格的介词与常见用法">一、支配第三格 / 第四格的介词与常见用法</h2>
-<p>德语介词会强制其后的名词或代词使用特定的格。这里重点复习以下三类：</p>
-<h3 id="1-只支配第三格的介词-präpositionen-mit-dativ">1. 只支配第三格的介词（Präpositionen mit Dativ）</h3>
-<p>这类介词后面<strong>永远</strong>跟第三格。</p>
-<div class="table-wrap"><table><thead><tr><th>介词</th><th>常见含义</th><th>例句</th></tr></thead><tbody><tr><td><strong>aus</strong></td><td>从…出来；来自</td><td>Ich komme <strong>aus der</strong> Türkei. / Das T-Shirt ist <strong>aus</strong> Baumwolle.</td></tr><tr><td><strong>bei</strong></td><td>在…附近；在…处</td><td>Ich wohne <strong>bei</strong> mein<strong>em</strong> Bruder. / Sie arbeitet <strong>bei</strong> Siemens.</td></tr><tr><td><strong>mit</strong></td><td>和…一起；用（工具）</td><td>Ich fahre <strong>mit dem</strong> Bus. / Kaffee <strong>mit</strong> Milch, bitte.</td></tr><tr><td><strong>nach</strong></td><td>去…（城市/国家）；在…之后</td><td>Wir fliegen <strong>nach</strong> Spanien. / <strong>Nach der</strong> Arbeit gehe ich einkaufen.</td></tr><tr><td><strong>seit</strong></td><td>自从（时间）</td><td>Ich lerne <strong>seit</strong> ein<strong>em</strong> Monat Deutsch.</td></tr><tr><td><strong>von</strong></td><td>从…来；（所属）</td><td>Das Geschenk ist <strong>von</strong> mein<strong>er</strong> Mutter. / Ich komme <strong>vom</strong> (von dem) Arzt.</td></tr><tr><td><strong>zu</strong></td><td>去…（人/场所）；在…时候</td><td>Ich gehe <strong>zu</strong> mein<strong>em</strong> Freund. / <strong>Zum</strong> (zu dem) Frühstück trinke ich Tee.</td></tr><tr><td><strong>gegenüber</strong></td><td>在…对面</td><td>Die Bank ist <strong>dem</strong> Bahnhof <strong>gegenüber</strong>. <em>(常后置)</em></td></tr></tbody></table></div>
-<h3 id="2-只支配第四格的介词-präpositionen-mit-akkusativ">2. 只支配第四格的介词（Präpositionen mit Akkusativ）</h3>
-<p>这类介词后面<strong>永远</strong>跟第四格。</p>
-<div class="table-wrap"><table><thead><tr><th>介词</th><th>常见含义</th><th>例句</th></tr></thead><tbody><tr><td><strong>durch</strong></td><td>穿过</td><td>Wir spazieren <strong>durch den</strong> Park.</td></tr><tr><td><strong>für</strong></td><td>为了；给</td><td>Die Blumen sind <strong>für meinen</strong> Vater.</td></tr><tr><td><strong>ohne</strong></td><td>没有</td><td>Er geht <strong>ohne sein</strong> Handy aus.</td></tr><tr><td><strong>um</strong></td><td>环绕；在…点（钟）</td><td>Wir sitzen <strong>um den</strong> Tisch. / Der Kurs beginnt <strong>um</strong> 9 Uhr.</td></tr><tr><td><strong>gegen</strong></td><td>反对；大约（时间/方向）</td><td>Er ist <strong>gegen den</strong> Plan. / Ich komme <strong>gegen</strong> 8 Uhr.</td></tr><tr><td><strong>bis</strong></td><td>直到（常不加冠词）</td><td>Bis morgen! / Der Zug fährt <strong>bis</strong> Köln.</td></tr><tr><td><strong>entlang</strong></td><td>沿着（多后置，前面用第四格）</td><td>Gehen Sie die Straße <strong>entlang</strong>.</td></tr></tbody></table></div>
-<blockquote>🔑 小口诀：<strong>durch, für, ohne, um, gegen, bis – 只用四格记心里</strong>。</blockquote>
-<hr>
-<h3 id="补充-第三格与第四格基本变格规则">🔤 补充：第三格与第四格基本变格规则</h3>
-<p>介词后的名词/代词必须用对格，需要先掌握下列基本变格形式。</p>
-<h4 id="定冠词-der-das-die">定冠词（der/das/die）</h4>
-<div class="table-wrap"><table><thead><tr><th>格</th><th>阳性 (der)</th><th>中性 (das)</th><th>阴性 (die)</th><th>复数 (die)</th></tr></thead><tbody><tr><td>第三格 (Dativ)</td><td><strong>dem</strong></td><td><strong>dem</strong></td><td><strong>der</strong></td><td><strong>den</strong> (+ n)</td></tr><tr><td>第四格 (Akkusativ)</td><td><strong>den</strong></td><td><strong>das</strong></td><td><strong>die</strong></td><td><strong>die</strong></td></tr></tbody></table></div>
-<h4 id="不定冠词-ein-eine-否定冠词-kein-keine">不定冠词（ein/eine）&amp; 否定冠词（kein/keine）</h4>
-<div class="table-wrap"><table><thead><tr><th>格</th><th>阳性</th><th>中性</th><th>阴性</th><th>复数 (keine)</th></tr></thead><tbody><tr><td>第三格 (Dativ)</td><td>einem / keinem</td><td>einem / keinem</td><td>einer / keiner</td><td>keinen (+ n)</td></tr><tr><td>第四格 (Akkusativ)</td><td>einen / keinen</td><td>ein / kein</td><td>eine / keine</td><td>keine</td></tr></tbody></table></div>
-<h4 id="物主冠词-mein-dein-sein-与否定冠词-kein-变格相同">物主冠词（mein, dein, sein…）与否定冠词 kein 变格相同</h4>
-<p>例：mit <strong>meinem</strong> Bruder (三格阳), für <strong>meine</strong> Mutter (四格阴)</p>
-<h4 id="人称代词">人称代词</h4>
-<div class="table-wrap"><table><thead><tr><th>人称</th><th>第三格 (Dativ)</th><th>第四格 (Akkusativ)</th></tr></thead><tbody><tr><td>ich</td><td>mir</td><td>mich</td></tr><tr><td>du</td><td>dir</td><td>dich</td></tr><tr><td>er</td><td>ihm</td><td>ihn</td></tr><tr><td>es</td><td>ihm</td><td>es</td></tr><tr><td>sie (她)</td><td>ihr</td><td>sie</td></tr><tr><td>wir</td><td>uns</td><td>uns</td></tr><tr><td>ihr</td><td>euch</td><td>euch</td></tr><tr><td>sie (他们)</td><td>ihnen</td><td>sie</td></tr><tr><td>Sie (您/您们)</td><td>Ihnen</td><td>Sie</td></tr></tbody></table></div>
-<hr>
-<h3 id="3-支配三格或四格的介词-wechselpräpositionen">3. 支配三格或四格的介词（Wechselpräpositionen）⭐</h3>
-<p>这类介词也叫“动四静三”介词。同一个介词，根据表达含义的不同，决定用三格还是四格。</p>
-<ul><li><strong>Wo?</strong>（在哪里？）表示<strong>位置、静态</strong> → <strong>第三格（Dativ）</strong></li><li><strong>Wohin?</strong>（去哪里？）表示<strong>方向、动态</strong> → <strong>第四格（Akkusativ）</strong></li></ul>
-<p><strong>9大“静三动四”介词：</strong> <code>an, auf, hinter, in, neben, über, unter, vor, zwischen</code></p>
-<div class="table-wrap"><table><thead><tr><th>介词</th><th>静三 (Dativ) – Wo?</th><th>动四 (Akkusativ) – Wohin?</th></tr></thead><tbody><tr><td><strong>an</strong> (在…旁边/接触)</td><td>Das Bild hängt <strong>an der</strong> Wand.</td><td>Ich hänge das Bild <strong>an die</strong> Wand.</td></tr><tr><td><strong>auf</strong> (在…上面)</td><td>Das Buch liegt <strong>auf dem</strong> Tisch.</td><td>Ich lege das Buch <strong>auf den</strong> Tisch.</td></tr><tr><td><strong>hinter</strong> (在…后面)</td><td>Der Ball ist <strong>hinter dem</strong> Sofa.</td><td>Der Ball rollt <strong>hinter das</strong> Sofa.</td></tr><tr><td><strong>in</strong> (在…里面)</td><td>Ich bin <strong>in dem (im)</strong> Büro.</td><td>Ich gehe <strong>in das (ins)</strong> Büro.</td></tr><tr><td><strong>neben</strong> (在…旁边)</td><td>Die Lampe steht <strong>neben dem</strong> Bett.</td><td>Stell die Lampe <strong>neben das</strong> Bett.</td></tr><tr><td><strong>über</strong> (在…上方)</td><td>Das Bild hängt <strong>über dem</strong> Sofa.</td><td>Ich hänge das Bild <strong>über das</strong> Sofa.</td></tr><tr><td><strong>unter</strong> (在…下面)</td><td>Die Katze sitzt <strong>unter dem</strong> Stuhl.</td><td>Die Katze kriecht <strong>unter den</strong> Stuhl.</td></tr><tr><td><strong>vor</strong> (在…前面)</td><td>Das Auto steht <strong>vor dem</strong> Haus.</td><td>Ich fahre das Auto <strong>vor das</strong> Haus.</td></tr><tr><td><strong>zwischen</strong> (在…之间)</td><td>Die Vase steht <strong>zwischen den</strong> Büchern.</td><td>Ich stelle die Vase <strong>zwischen die</strong> Bücher.</td></tr></tbody></table></div>
-<blockquote>⚠️ 常用缩写：<br><code>in dem = im</code>  <code>in das = ins</code><br><code>an dem = am</code>  <code>an das = ans</code><br><code>auf das = aufs</code>  <code>zu dem = zum</code>  <code>zu der = zur</code></blockquote>
-<hr>
-<h2 id="二-现在完成时-perfekt">二、现在完成时（Perfekt）</h2>
-<p>现在完成时是德语口语中<strong>最常用</strong>的过去时态，用来描述已经发生的动作。</p>
-<h3 id="1-基本结构">1. 基本结构</h3>
-<blockquote><strong>haben / sein + Partizip II (第二分词)</strong></blockquote>
-<p>助动词在句子第二位根据主语变位，第二分词放在<strong>句末</strong>。</p>
-<div class="table-wrap"><table><thead><tr><th></th><th>位置2 (助动词)</th><th>...</th><th>句末 (第二分词)</th></tr></thead><tbody><tr><td>Ich</td><td><strong>habe</strong></td><td>einen Apfel</td><td><strong>gegessen</strong>.</td></tr><tr><td>Er</td><td><strong>ist</strong></td><td>nach Hause</td><td><strong>gegangen</strong>.</td></tr></tbody></table></div>
-<h3 id="2-助动词-sein-还是-haben">2. 助动词 sein 还是 haben？</h3>
-<div class="table-wrap"><table><thead><tr><th>用 <strong>sein</strong></th><th>用 <strong>haben</strong></th></tr></thead><tbody><tr><td>表示<strong>位置移动</strong>的不及物动词：gehen, fahren, kommen, laufen, fliegen...</td><td>绝大多数动词</td></tr><tr><td>表示<strong>状态变化</strong>：aufwachen, einschlafen, sterben, werden...</td><td>及物动词（带宾语）</td></tr><tr><td>特殊词：<strong>sein</strong>, <strong>bleiben</strong>, <strong>passieren</strong></td><td>反身动词</td></tr><tr><td>例：Er <strong>ist</strong> nach Berlin <strong>gefahren</strong>.</td><td>例：Ich <strong>habe</strong> ein Buch <strong>gelesen</strong>.</td></tr></tbody></table></div>
-<h3 id="3-第二分词-partizip-ii-的构成">3. 第二分词（Partizip II）的构成</h3>
-<h4 id="规则变化-弱变化-ge-词干-t">✅ 规则变化（弱变化）：ge + 词干 + t</h4>
-<p>（词干以 -t/-d 结尾时加 -et）</p>
-<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th></tr></thead><tbody><tr><td>machen</td><td>ge<strong>mach</strong>t</td><td>做</td></tr><tr><td>lernen</td><td>ge<strong>lern</strong>t</td><td>学习</td></tr><tr><td>kaufen</td><td>ge<strong>kauf</strong>t</td><td>购买</td></tr><tr><td>wohnen</td><td>ge<strong>wohn</strong>t</td><td>居住</td></tr><tr><td>spielen</td><td>ge<strong>spiel</strong>t</td><td>玩；演奏</td></tr><tr><td>hören</td><td>ge<strong>hör</strong>t</td><td>听</td></tr><tr><td>fragen</td><td>ge<strong>frag</strong>t</td><td>问</td></tr><tr><td>sagen</td><td>ge<strong>sag</strong>t</td><td>说</td></tr><tr><td>suchen</td><td>ge<strong>such</strong>t</td><td>寻找</td></tr><tr><td>arbeiten</td><td>ge<strong>arbeit</strong>et</td><td>工作</td></tr><tr><td>warten</td><td>ge<strong>wart</strong>et</td><td>等待</td></tr><tr><td>öffnen</td><td>ge<strong>öffn</strong>et</td><td>打开</td></tr></tbody></table></div>
-<h4 id="以-ieren-结尾的动词-不加-ge-直接-t">✅ 以 -ieren 结尾的动词（不加 ge，直接 + t）</h4>
-<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th></tr></thead><tbody><tr><td>studieren</td><td>studier<strong>t</strong></td><td>学习（大学）</td></tr><tr><td>telefonieren</td><td>telefonier<strong>t</strong></td><td>打电话</td></tr><tr><td>diskutieren</td><td>diskutier<strong>t</strong></td><td>讨论</td></tr><tr><td>probieren</td><td>probier<strong>t</strong></td><td>尝试；品尝</td></tr><tr><td>reservieren</td><td>reservier<strong>t</strong></td><td>预订</td></tr><tr><td>reparieren</td><td>reparier<strong>t</strong></td><td>修理</td></tr><tr><td>trainieren</td><td>trainier<strong>t</strong></td><td>训练</td></tr></tbody></table></div>
-<h4 id="可分动词-前缀-ge-词干-t">✅ 可分动词（前缀 + ge + 词干 + t）</h4>
-<p>（若词干不规则，则套用相应不规则形式）</p>
-<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th></tr></thead><tbody><tr><td>aufmachen</td><td><strong>auf</strong>ge<strong>mach</strong>t</td><td>打开</td></tr><tr><td>zumachen</td><td><strong>zu</strong>ge<strong>mach</strong>t</td><td>关上</td></tr><tr><td>einkaufen</td><td><strong>ein</strong>ge<strong>kauf</strong>t</td><td>购物</td></tr><tr><td>aufräumen</td><td><strong>auf</strong>ge<strong>räum</strong>t</td><td>整理</td></tr><tr><td>anrufen</td><td><strong>an</strong>ge<strong>rufen</strong></td><td>打电话（强变化词干）</td></tr><tr><td>fernsehen</td><td><strong>fern</strong>ge<strong>seh</strong>en</td><td>看电视（强变化词干）</td></tr><tr><td>mitbringen</td><td><strong>mit</strong>ge<strong>brach</strong>t</td><td>带来（bringen不规则）</td></tr><tr><td>abholen</td><td><strong>ab</strong>ge<strong>hol</strong>t</td><td>接；取</td></tr></tbody></table></div>
-<h4 id="常见不规则变化-强变化-必须熟记">✅ 常见不规则变化（强变化，必须熟记）</h4>
-<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>释义</th><th>例句</th></tr></thead><tbody><tr><td>essen</td><td>ge<strong>gess</strong>en</td><td>吃</td><td>Ich habe Pizza gegessen.</td></tr><tr><td>trinken</td><td>ge<strong>trunk</strong>en</td><td>喝</td><td>Was hast du getrunken?</td></tr><tr><td>schreiben</td><td>ge<strong>schrieb</strong>en</td><td>写</td><td>Er hat eine E-Mail geschrieben.</td></tr><tr><td>lesen</td><td>ge<strong>les</strong>en</td><td>阅读</td><td>Hast du das Buch gelesen?</td></tr><tr><td>sehen</td><td>ge<strong>seh</strong>en</td><td>看见</td><td>Wir haben einen Film gesehen.</td></tr><tr><td>nehmen</td><td>ge<strong>nomm</strong>en</td><td>拿；乘坐</td><td>Ich habe den Bus genommen.</td></tr><tr><td>sprechen</td><td>ge<strong>sproch</strong>en</td><td>说话</td><td>Wir haben Deutsch gesprochen.</td></tr><tr><td>helfen</td><td>ge<strong>holf</strong>en</td><td>帮助</td><td>Wer hat dir geholfen?</td></tr><tr><td>finden</td><td>ge<strong>fund</strong>en</td><td>找到</td><td>Ich habe den Schlüssel gefunden.</td></tr><tr><td>singen</td><td>ge<strong>sung</strong>en</td><td>唱歌</td><td>Er hat ein Lied gesungen.</td></tr><tr><td>schlafen</td><td>ge<strong>schlaf</strong>en</td><td>睡觉</td><td>Ich habe schlecht geschlafen.</td></tr><tr><td>fahren (ist)</td><td>ge<strong>fahr</strong>en</td><td>乘车/开车</td><td>Bist du mit dem Zug gefahren?</td></tr><tr><td>kommen (ist)</td><td>ge<strong>komm</strong>en</td><td>来</td><td>Wann bist du gekommen?</td></tr><tr><td>gehen (ist)</td><td>ge<strong>gang</strong>en</td><td>走；去</td><td>Sie ist ins Kino gegangen.</td></tr><tr><td>fliegen (ist)</td><td>ge<strong>flog</strong>en</td><td>飞；乘飞机</td><td>Er ist nach Rom geflogen.</td></tr><tr><td>laufen (ist)</td><td>ge<strong>lauf</strong>en</td><td>跑；走路</td><td>Ich bin 5 Kilometer gelaufen.</td></tr></tbody></table></div>
-<h3 id="4-句式示例">4. 句式示例</h3>
-<ul><li><strong>陈述句</strong>：Gestern <strong>habe</strong> ich meine Hausaufgaben <strong>gemacht</strong>. (我昨天做了作业。)</li><li><strong>完成时带情态动词较少见</strong>，A1阶段先掌握基本用法。</li><li><strong>否定词nicht</strong> 一般放在第二分词前：Ich habe ihn <strong>nicht</strong> gesehen.</li></ul>
-<hr>
-<blockquote>✨ <strong>复习建议</strong>：<br>1. 介词“静三动四”多通过实物位置练习，造句对比。<br>2. 将不规则动词的第二分词编成小故事或卡片反复记忆。<br>3. 用现在完成时写一篇日记，描述今天做了什么。<br>4. 牢记第三格和第四格定冠词、人称代词的变化，是正确使用介词的前提。</blockquote>
-<p>Viel Erfolg beim Deutschlernen! 📚</p>
+      <div class="module-grid">
+        <article class="module-card" data-module="vocabulary" data-date="2026-06-16" id="source-0-vocabulary">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-16 · 0616语法-介词及现在完成时-deepseek.md</p>
+      <h3>德语 A1 复习笔记：介词与现在完成时</h3>
+      <span>词汇</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：介词与现在完成时 词汇目录"><a class="level-3" href="#vocabulary-0-现在完成时常见动词">现在完成时常见动词</a><a class="level-3" href="#vocabulary-0-常见可分动词">常见可分动词</a></nav>
+    <div class="markdown-body">
+      <h3 id="vocabulary-0-现在完成时常见动词">现在完成时常见动词</h3>
+<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>助动词</th><th>中文</th></tr></thead><tbody><tr><td>machen</td><td>gemacht</td><td>haben</td><td>做</td></tr><tr><td>lernen</td><td>gelernt</td><td>haben</td><td>学习</td></tr><tr><td>kaufen</td><td>gekauft</td><td>haben</td><td>购买</td></tr><tr><td>wohnen</td><td>gewohnt</td><td>haben</td><td>居住</td></tr><tr><td>spielen</td><td>gespielt</td><td>haben</td><td>玩；演奏</td></tr><tr><td>hören</td><td>gehört</td><td>haben</td><td>听</td></tr><tr><td>fragen</td><td>gefragt</td><td>haben</td><td>问</td></tr><tr><td>sagen</td><td>gesagt</td><td>haben</td><td>说</td></tr><tr><td>suchen</td><td>gesucht</td><td>haben</td><td>寻找</td></tr><tr><td>arbeiten</td><td>gearbeitet</td><td>haben</td><td>工作</td></tr><tr><td>warten</td><td>gewartet</td><td>haben</td><td>等待</td></tr><tr><td>öffnen</td><td>geöffnet</td><td>haben</td><td>打开</td></tr><tr><td>essen</td><td>gegessen</td><td>haben</td><td>吃</td></tr><tr><td>trinken</td><td>getrunken</td><td>haben</td><td>喝</td></tr><tr><td>schreiben</td><td>geschrieben</td><td>haben</td><td>写</td></tr><tr><td>lesen</td><td>gelesen</td><td>haben</td><td>阅读</td></tr><tr><td>sehen</td><td>gesehen</td><td>haben</td><td>看见</td></tr><tr><td>nehmen</td><td>genommen</td><td>haben</td><td>拿；乘坐</td></tr><tr><td>sprechen</td><td>gesprochen</td><td>haben</td><td>说话</td></tr><tr><td>helfen</td><td>geholfen</td><td>haben</td><td>帮助</td></tr><tr><td>finden</td><td>gefunden</td><td>haben</td><td>找到</td></tr><tr><td>fahren</td><td>gefahren</td><td>sein</td><td>乘车；开车</td></tr><tr><td>kommen</td><td>gekommen</td><td>sein</td><td>来</td></tr><tr><td>gehen</td><td>gegangen</td><td>sein</td><td>走；去</td></tr><tr><td>fliegen</td><td>geflogen</td><td>sein</td><td>飞；乘飞机</td></tr><tr><td>laufen</td><td>gelaufen</td><td>sein</td><td>跑；走路</td></tr></tbody></table></div>
+<h3 id="vocabulary-0-常见可分动词">常见可分动词</h3>
+<div class="table-wrap"><table><thead><tr><th>不定式</th><th>第二分词</th><th>中文</th></tr></thead><tbody><tr><td>aufmachen</td><td>aufgemacht</td><td>打开</td></tr><tr><td>zumachen</td><td>zugemacht</td><td>关上</td></tr><tr><td>einkaufen</td><td>eingekauft</td><td>购物</td></tr><tr><td>aufräumen</td><td>aufgeräumt</td><td>整理</td></tr><tr><td>anrufen</td><td>angerufen</td><td>打电话</td></tr><tr><td>fernsehen</td><td>ferngesehen</td><td>看电视</td></tr><tr><td>mitbringen</td><td>mitgebracht</td><td>带来</td></tr><tr><td>abholen</td><td>abgeholt</td><td>接；取</td></tr></tbody></table></div>
+    </div>
+  </article>
+<article class="module-card" data-module="vocabulary" data-date="2026-06-25" id="source-1-vocabulary">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-25 · 0625表达-交通与位置-序数词-deepseek.md</p>
+      <h3>德语 A1 复习笔记：交通方式、位置表达与序数词</h3>
+      <span>词汇</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：交通方式、位置表达与序数词 词汇目录"><a class="level-3" href="#vocabulary-1-常见交通方式词汇">常见交通方式词汇</a><a class="level-3" href="#vocabulary-1-方向与位置词">方向与位置词</a></nav>
+    <div class="markdown-body">
+      <h3 id="vocabulary-1-常见交通方式词汇">常见交通方式词汇</h3>
+<div class="table-wrap"><table><thead><tr><th>德语</th><th>词性</th><th>中文</th></tr></thead><tbody><tr><td>das Auto</td><td>-s</td><td>汽车</td></tr><tr><td>der Bus</td><td>-ses, -se</td><td>公共汽车</td></tr><tr><td>die U-Bahn</td><td>-, -en</td><td>地铁</td></tr><tr><td>die S-Bahn</td><td>-, -en</td><td>城铁/轻轨</td></tr><tr><td>der Zug</td><td>-(e)s, Züge</td><td>火车</td></tr><tr><td>die Straßenbahn</td><td>-, -en</td><td>有轨电车</td></tr><tr><td>das Fahrrad</td><td>-(e)s, Fahrräder</td><td>自行车</td></tr><tr><td>das Motorrad</td><td>-(e)s, Motorräder</td><td>摩托车</td></tr><tr><td>das Flugzeug</td><td>-(e)s, -e</td><td>飞机</td></tr><tr><td>das Schiff</td><td>-(e)s, -e</td><td>轮船</td></tr><tr><td>zu Fuß</td><td>-</td><td>步行</td></tr></tbody></table></div>
+<h3 id="vocabulary-1-方向与位置词">方向与位置词</h3>
+<div class="table-wrap"><table><thead><tr><th>德语</th><th>中文</th></tr></thead><tbody><tr><td>geradeaus</td><td>直走</td></tr><tr><td>links</td><td>左边；向左</td></tr><tr><td>rechts</td><td>右边；向右</td></tr><tr><td>neben</td><td>在...旁边</td></tr><tr><td>im Stadtzentrum</td><td>在市中心</td></tr><tr><td>die Haltestelle</td><td>车站；站点</td></tr><tr><td>der Bahnhof</td><td>火车站</td></tr><tr><td>der Flughafen</td><td>机场</td></tr></tbody></table></div>
+    </div>
+  </article>
+<article class="module-card" data-module="vocabulary" data-date="2026-06-27" id="source-2-vocabulary">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-27 · 0627.md</p>
+      <h3>德语 A1 复习笔记：办公室物品、情态动词与日期表达</h3>
+      <span>词汇</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：办公室物品、情态动词与日期表达 词汇目录"><a class="level-3" href="#vocabulary-2-办公室常见物品">办公室常见物品</a><a class="level-3" href="#vocabulary-2-表示程度-范围和限制的副词">表示程度、范围和限制的副词</a></nav>
+    <div class="markdown-body">
+      <h3 id="vocabulary-2-办公室常见物品">办公室常见物品</h3>
+<div class="table-wrap"><table><thead><tr><th>Deutsch</th><th>Artikel / Form</th><th>中文</th><th>Beispiel</th></tr></thead><tbody><tr><td>der Monitor</td><td>die Monitore</td><td>显示器</td><td>Der Monitor steht auf dem Tisch.</td></tr><tr><td>der Computer</td><td>die Computer</td><td>电脑</td><td>Der Computer ist neu.</td></tr><tr><td>der Laptop</td><td>die Laptops</td><td>笔记本电脑</td><td>Mein Laptop liegt in der Tasche.</td></tr><tr><td>die Tastatur</td><td>die Tastaturen</td><td>键盘</td><td>Die Tastatur liegt vor dem Monitor.</td></tr><tr><td>die Maus</td><td>die Mäuse</td><td>鼠标</td><td>Die Maus liegt neben der Tastatur.</td></tr><tr><td>der Drucker</td><td>die Drucker</td><td>打印机</td><td>Der Drucker steht neben dem Schrank.</td></tr><tr><td>das Papier</td><td>nur Singular</td><td>纸</td><td>Das Papier liegt im Drucker.</td></tr><tr><td>der Stift</td><td>die Stifte</td><td>笔</td><td>Der Stift liegt auf dem Heft.</td></tr><tr><td>das Heft</td><td>die Hefte</td><td>本子</td><td>Das Heft ist unter dem Buch.</td></tr><tr><td>das Buch</td><td>die Bücher</td><td>书</td><td>Das Buch liegt auf dem Tisch.</td></tr><tr><td>der Ordner</td><td>die Ordner</td><td>文件夹</td><td>Der Ordner steht im Regal.</td></tr><tr><td>das Regal</td><td>die Regale</td><td>架子</td><td>Das Regal steht an der Wand.</td></tr><tr><td>der Schrank</td><td>die Schränke</td><td>柜子</td><td>Der Schrank ist neben der Tür.</td></tr><tr><td>der Tisch</td><td>die Tische</td><td>桌子</td><td>Auf dem Tisch steht eine Pflanze.</td></tr><tr><td>der Stuhl</td><td>die Stühle</td><td>椅子</td><td>Der Stuhl steht vor dem Tisch.</td></tr><tr><td>die Lampe</td><td>die Lampen</td><td>台灯</td><td>Die Lampe steht auf dem Schreibtisch.</td></tr><tr><td>die Pflanze</td><td>die Pflanzen</td><td>植物</td><td>Die Pflanze steht am Fenster.</td></tr><tr><td>das Fenster</td><td>die Fenster</td><td>窗户</td><td>Das Fenster ist hinter dem Tisch.</td></tr><tr><td>die Tür</td><td>die Türen</td><td>门</td><td>Die Tür ist rechts.</td></tr><tr><td>die Uhr</td><td>die Uhren</td><td>钟、表</td><td>Die Uhr hängt an der Wand.</td></tr></tbody></table></div>
+<h3 id="vocabulary-2-表示程度-范围和限制的副词">表示程度、范围和限制的副词</h3>
+<div class="table-wrap"><table><thead><tr><th>Deutsch</th><th>中文</th><th>用法例句</th></tr></thead><tbody><tr><td>sehr</td><td>很、非常</td><td>Der Monitor ist sehr groß.</td></tr><tr><td>wirklich</td><td>真的、确实</td><td>Der Drucker ist wirklich alt.</td></tr><tr><td>nur</td><td>只、仅仅</td><td>Ich habe nur einen Stift.</td></tr><tr><td>auch</td><td>也</td><td>Ich brauche auch Papier.</td></tr><tr><td>noch</td><td>还、仍然</td><td>Der Computer ist noch an.</td></tr><tr><td>schon</td><td>已经</td><td>Der Drucker ist schon kaputt.</td></tr><tr><td>fast</td><td>几乎</td><td>Das Büro ist fast leer.</td></tr><tr><td>ganz</td><td>完全、相当</td><td>Das ist ganz einfach.</td></tr><tr><td>ziemlich</td><td>相当、颇</td><td>Der Schrank ist ziemlich groß.</td></tr><tr><td>besonders</td><td>特别</td><td>Die Lampe ist besonders hell.</td></tr><tr><td>vielleicht</td><td>也许</td><td>Vielleicht ist der Stift in der Tasche.</td></tr><tr><td>zusammen</td><td>一起、总共</td><td>Wir lernen zusammen Deutsch.</td></tr></tbody></table></div>
+    </div>
+  </article>
       </div>
-    </article>
+    </section>
+<section class="module-section" data-module-section="grammar" id="grammar">
+      <header class="section-header">
+        <p class="kicker">3 个内容块</p>
+        <h2>语法模块</h2>
+      </header>
+      <div class="module-grid">
+        <article class="module-card" data-module="grammar" data-date="2026-06-16" id="source-0-grammar">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-16 · 0616语法-介词及现在完成时-deepseek.md</p>
+      <h3>德语 A1 复习笔记：介词与现在完成时</h3>
+      <span>语法</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：介词与现在完成时 语法目录"><a class="level-3" href="#grammar-0-只支配第三格的介词-präpositionen-mit-dativ">只支配第三格的介词（Präpositionen mit Dativ）</a><a class="level-3" href="#grammar-0-只支配第四格的介词-präpositionen-mit-akkusativ">只支配第四格的介词（Präpositionen mit Akkusativ）</a><a class="level-3" href="#grammar-0-第三格与第四格基本变格规则">第三格与第四格基本变格规则</a><a class="level-3" href="#grammar-0-支配三格或四格的介词-wechselpräpositionen">支配三格或四格的介词（Wechselpräpositionen）</a><a class="level-3" href="#grammar-0-现在完成时-perfekt">现在完成时（Perfekt）</a></nav>
+    <div class="markdown-body">
+      <h3 id="grammar-0-只支配第三格的介词-präpositionen-mit-dativ">只支配第三格的介词（Präpositionen mit Dativ）</h3>
+<p>这类介词后面永远跟第三格。</p>
+<div class="table-wrap"><table><thead><tr><th>介词</th><th>常见含义</th><th>例句</th></tr></thead><tbody><tr><td><strong>aus</strong></td><td>从...出来；来自</td><td>Ich komme <strong>aus der</strong> Türkei. / Das T-Shirt ist <strong>aus</strong> Baumwolle.</td></tr><tr><td><strong>bei</strong></td><td>在...附近；在...处</td><td>Ich wohne <strong>bei</strong> mein<strong>em</strong> Bruder. / Sie arbeitet <strong>bei</strong> Siemens.</td></tr><tr><td><strong>mit</strong></td><td>和...一起；用（工具）</td><td>Ich fahre <strong>mit dem</strong> Bus. / Kaffee <strong>mit</strong> Milch, bitte.</td></tr><tr><td><strong>nach</strong></td><td>去...（城市/国家）；在...之后</td><td>Wir fliegen <strong>nach</strong> Spanien. / <strong>Nach der</strong> Arbeit gehe ich einkaufen.</td></tr><tr><td><strong>seit</strong></td><td>自从（时间）</td><td>Ich lerne <strong>seit</strong> ein<strong>em</strong> Monat Deutsch.</td></tr><tr><td><strong>von</strong></td><td>从...来；所属</td><td>Das Geschenk ist <strong>von</strong> mein<strong>er</strong> Mutter. / Ich komme <strong>vom</strong> Arzt.</td></tr><tr><td><strong>zu</strong></td><td>去...（人/场所）；在...时候</td><td>Ich gehe <strong>zu</strong> mein<strong>em</strong> Freund. / <strong>Zum</strong> Frühstück trinke ich Tee.</td></tr><tr><td><strong>gegenüber</strong></td><td>在...对面</td><td>Die Bank ist <strong>dem</strong> Bahnhof <strong>gegenüber</strong>.</td></tr></tbody></table></div>
+<h3 id="grammar-0-只支配第四格的介词-präpositionen-mit-akkusativ">只支配第四格的介词（Präpositionen mit Akkusativ）</h3>
+<p>这类介词后面永远跟第四格。</p>
+<div class="table-wrap"><table><thead><tr><th>介词</th><th>常见含义</th><th>例句</th></tr></thead><tbody><tr><td><strong>durch</strong></td><td>穿过</td><td>Wir spazieren <strong>durch den</strong> Park.</td></tr><tr><td><strong>für</strong></td><td>为了；给</td><td>Die Blumen sind <strong>für meinen</strong> Vater.</td></tr><tr><td><strong>ohne</strong></td><td>没有</td><td>Er geht <strong>ohne sein</strong> Handy aus.</td></tr><tr><td><strong>um</strong></td><td>环绕；在...点</td><td>Wir sitzen <strong>um den</strong> Tisch. / Der Kurs beginnt <strong>um</strong> 9 Uhr.</td></tr><tr><td><strong>gegen</strong></td><td>反对；大约</td><td>Er ist <strong>gegen den</strong> Plan. / Ich komme <strong>gegen</strong> 8 Uhr.</td></tr><tr><td><strong>bis</strong></td><td>直到</td><td>Bis morgen! / Der Zug fährt <strong>bis</strong> Köln.</td></tr><tr><td><strong>entlang</strong></td><td>沿着</td><td>Gehen Sie die Straße <strong>entlang</strong>.</td></tr></tbody></table></div>
+<h3 id="grammar-0-第三格与第四格基本变格规则">第三格与第四格基本变格规则</h3>
+<div class="table-wrap"><table><thead><tr><th>格</th><th>阳性 (der)</th><th>中性 (das)</th><th>阴性 (die)</th><th>复数 (die)</th></tr></thead><tbody><tr><td>第三格 (Dativ)</td><td><strong>dem</strong></td><td><strong>dem</strong></td><td><strong>der</strong></td><td><strong>den</strong> (+ n)</td></tr><tr><td>第四格 (Akkusativ)</td><td><strong>den</strong></td><td><strong>das</strong></td><td><strong>die</strong></td><td><strong>die</strong></td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>格</th><th>阳性</th><th>中性</th><th>阴性</th><th>复数 (keine)</th></tr></thead><tbody><tr><td>第三格 (Dativ)</td><td>einem / keinem</td><td>einem / keinem</td><td>einer / keiner</td><td>keinen (+ n)</td></tr><tr><td>第四格 (Akkusativ)</td><td>einen / keinen</td><td>ein / kein</td><td>eine / keine</td><td>keine</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>人称</th><th>第三格 (Dativ)</th><th>第四格 (Akkusativ)</th></tr></thead><tbody><tr><td>ich</td><td>mir</td><td>mich</td></tr><tr><td>du</td><td>dir</td><td>dich</td></tr><tr><td>er</td><td>ihm</td><td>ihn</td></tr><tr><td>es</td><td>ihm</td><td>es</td></tr><tr><td>sie (她)</td><td>ihr</td><td>sie</td></tr><tr><td>wir</td><td>uns</td><td>uns</td></tr><tr><td>ihr</td><td>euch</td><td>euch</td></tr><tr><td>sie (他们)</td><td>ihnen</td><td>sie</td></tr><tr><td>Sie (您/您们)</td><td>Ihnen</td><td>Sie</td></tr></tbody></table></div>
+<h3 id="grammar-0-支配三格或四格的介词-wechselpräpositionen">支配三格或四格的介词（Wechselpräpositionen）</h3>
+<p>这类介词也叫“动四静三”介词。同一个介词，根据表达含义的不同，决定用三格还是四格。</p>
+<ul><li><strong>Wo?</strong>（在哪里？）表示位置、静态 -&gt; <strong>第三格（Dativ）</strong></li><li><strong>Wohin?</strong>（去哪里？）表示方向、动态 -&gt; <strong>第四格（Akkusativ）</strong></li></ul>
+<p>9 大“静三动四”介词：<code>an, auf, hinter, in, neben, über, unter, vor, zwischen</code></p>
+<div class="table-wrap"><table><thead><tr><th>介词</th><th>静三 (Dativ) - Wo?</th><th>动四 (Akkusativ) - Wohin?</th></tr></thead><tbody><tr><td><strong>an</strong></td><td>Das Bild hängt <strong>an der</strong> Wand.</td><td>Ich hänge das Bild <strong>an die</strong> Wand.</td></tr><tr><td><strong>auf</strong></td><td>Das Buch liegt <strong>auf dem</strong> Tisch.</td><td>Ich lege das Buch <strong>auf den</strong> Tisch.</td></tr><tr><td><strong>hinter</strong></td><td>Der Ball ist <strong>hinter dem</strong> Sofa.</td><td>Der Ball rollt <strong>hinter das</strong> Sofa.</td></tr><tr><td><strong>in</strong></td><td>Ich bin <strong>im</strong> Büro.</td><td>Ich gehe <strong>ins</strong> Büro.</td></tr><tr><td><strong>neben</strong></td><td>Die Lampe steht <strong>neben dem</strong> Bett.</td><td>Stell die Lampe <strong>neben das</strong> Bett.</td></tr><tr><td><strong>über</strong></td><td>Das Bild hängt <strong>über dem</strong> Sofa.</td><td>Ich hänge das Bild <strong>über das</strong> Sofa.</td></tr><tr><td><strong>unter</strong></td><td>Die Katze sitzt <strong>unter dem</strong> Stuhl.</td><td>Die Katze kriecht <strong>unter den</strong> Stuhl.</td></tr><tr><td><strong>vor</strong></td><td>Das Auto steht <strong>vor dem</strong> Haus.</td><td>Ich fahre das Auto <strong>vor das</strong> Haus.</td></tr><tr><td><strong>zwischen</strong></td><td>Die Vase steht <strong>zwischen den</strong> Büchern.</td><td>Ich stelle die Vase <strong>zwischen die</strong> Bücher.</td></tr></tbody></table></div>
+<h3 id="grammar-0-现在完成时-perfekt">现在完成时（Perfekt）</h3>
+<p>基本结构：<strong>haben / sein + Partizip II（第二分词）</strong></p>
+<p>助动词在句子第二位根据主语变位，第二分词放在句末。</p>
+<div class="table-wrap"><table><thead><tr><th>主语</th><th>位置 2（助动词）</th><th>中间成分</th><th>句末（第二分词）</th></tr></thead><tbody><tr><td>Ich</td><td><strong>habe</strong></td><td>einen Apfel</td><td><strong>gegessen</strong>.</td></tr><tr><td>Er</td><td><strong>ist</strong></td><td>nach Hause</td><td><strong>gegangen</strong>.</td></tr></tbody></table></div>
+<p>用 <strong>sein</strong> 的常见情况：</p>
+<ul><li>表示位置移动的不及物动词：gehen, fahren, kommen, laufen, fliegen</li><li>表示状态变化：aufwachen, einschlafen, sterben, werden</li><li>特殊词：sein, bleiben, passieren</li></ul>
+<p>第二分词构成：</p>
+<ul><li>规则变化：<code>ge + 词干 + t</code>，例如 machen -&gt; gemacht</li><li>词干以 <code>-t/-d</code> 结尾：常加 <code>-et</code>，例如 arbeiten -&gt; gearbeitet</li><li>以 <code>-ieren</code> 结尾：不加 <code>ge</code>，直接 <code>+ t</code>，例如 telefonieren -&gt; telefoniert</li><li>可分动词：<code>前缀 + ge + 词干 + t</code>，例如 einkaufen -&gt; eingekauft</li></ul>
+    </div>
+  </article>
+<article class="module-card" data-module="grammar" data-date="2026-06-25" id="source-1-grammar">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-25 · 0625表达-交通与位置-序数词-deepseek.md</p>
+      <h3>德语 A1 复习笔记：交通方式、位置表达与序数词</h3>
+      <span>语法</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：交通方式、位置表达与序数词 语法目录"><a class="level-3" href="#grammar-1-mit-交通工具-用第三格">mit + 交通工具：用第三格</a><a class="level-3" href="#grammar-1-序数词-ordnungszahlen">序数词（Ordnungszahlen）</a><a class="level-3" href="#grammar-1-序数词书写规范">序数词书写规范</a></nav>
+    <div class="markdown-body">
+      <h3 id="grammar-1-mit-交通工具-用第三格">mit + 交通工具：用第三格</h3>
+<p>用 <code>mit</code> 表达“乘坐/使用某种交通工具”时，后面的名词用第三格（Dativ）。</p>
+<div class="table-wrap"><table><thead><tr><th>性</th><th>形式</th><th>例子</th></tr></thead><tbody><tr><td>阳性</td><td>mit dem</td><td>mit dem Bus</td></tr><tr><td>中性</td><td>mit dem</td><td>mit dem Auto / mit dem Fahrrad</td></tr><tr><td>阴性</td><td>mit der</td><td>mit der U-Bahn / mit der S-Bahn / mit der Straßenbahn</td></tr></tbody></table></div>
+<p><code>zu Fuß</code> 是固定搭配，不加冠词。</p>
+<h3 id="grammar-1-序数词-ordnungszahlen">序数词（Ordnungszahlen）</h3>
+<p>序数词用来表示顺序、楼层、日期等。</p>
+<ul><li>1 到 19：基数词 + <code>-te</code>，部分有特殊变化</li><li>20 以上：基数词 + <code>-ste</code></li></ul>
+<div class="table-wrap"><table><thead><tr><th>数字</th><th>基数词</th><th>序数词</th><th>中文</th></tr></thead><tbody><tr><td>1</td><td>eins</td><td><strong>erste</strong></td><td>第一</td></tr><tr><td>2</td><td>zwei</td><td><strong>zweite</strong></td><td>第二</td></tr><tr><td>3</td><td>drei</td><td><strong>dritte</strong></td><td>第三</td></tr><tr><td>4</td><td>vier</td><td>vierte</td><td>第四</td></tr><tr><td>5</td><td>fünf</td><td>fünfte</td><td>第五</td></tr><tr><td>6</td><td>sechs</td><td>sechste</td><td>第六</td></tr><tr><td>7</td><td>sieben</td><td><strong>siebte</strong></td><td>第七</td></tr><tr><td>8</td><td>acht</td><td><strong>achte</strong></td><td>第八</td></tr><tr><td>9</td><td>neun</td><td>neunte</td><td>第九</td></tr><tr><td>10</td><td>zehn</td><td>zehnte</td><td>第十</td></tr><tr><td>11</td><td>elf</td><td>elfte</td><td>第十一</td></tr><tr><td>12</td><td>zwölf</td><td>zwölfte</td><td>第十二</td></tr><tr><td>13</td><td>dreizehn</td><td>dreizehnte</td><td>第十三</td></tr><tr><td>19</td><td>neunzehn</td><td>neunzehnte</td><td>第十九</td></tr><tr><td>20</td><td>zwanzig</td><td><strong>zwanzigste</strong></td><td>第二十</td></tr><tr><td>21</td><td>einundzwanzig</td><td>einundzwanzigste</td><td>第二十一</td></tr><tr><td>100</td><td>(ein)hundert</td><td>(ein)hundertste</td><td>第一百</td></tr></tbody></table></div>
+<p>必须牢记的特殊变化：</p>
+<ul><li><strong>eins -&gt; erste</strong></li><li><strong>drei -&gt; dritte</strong></li><li><strong>sieben -&gt; siebte</strong></li><li><strong>acht -&gt; achte</strong></li></ul>
+<h3 id="grammar-1-序数词书写规范">序数词书写规范</h3>
+<p>用数字表达序数词时，在数字后加一个点 <code>.</code>，例如 <code>1.</code>, <code>2.</code>, <code>3.</code>, <code>20.</code>。</p>
+<p>例句：Der 1. Januar ist ein Feiertag.</p>
+    </div>
+  </article>
+<article class="module-card" data-module="grammar" data-date="2026-06-27" id="source-2-grammar">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-27 · 0627.md</p>
+      <h3>德语 A1 复习笔记：办公室物品、情态动词与日期表达</h3>
+      <span>语法</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：办公室物品、情态动词与日期表达 语法目录"><a class="level-3" href="#grammar-2-情态动词的基本用法">情态动词的基本用法</a><a class="level-3" href="#grammar-2-例句">例句</a><a class="level-3" href="#grammar-2-语序提醒">语序提醒</a></nav>
+    <div class="markdown-body">
+      <h3 id="grammar-2-情态动词的基本用法">情态动词的基本用法</h3>
+<p>情态动词常和另一个动词一起使用，表示能力、愿望、义务、允许或必要性。句子结构通常是：</p>
+<blockquote>主语 + 情态动词变位 + 其他成分 + 动词原形。</blockquote>
+<div class="table-wrap"><table><thead><tr><th>情态动词</th><th>ich</th><th>du</th><th>er/sie/es</th><th>wir</th><th>ihr</th><th>sie/Sie</th><th>常见含义</th></tr></thead><tbody><tr><td>können</td><td>kann</td><td>kannst</td><td>kann</td><td>können</td><td>könnt</td><td>können</td><td>能、会、可以</td></tr><tr><td>möchten</td><td>möchte</td><td>möchtest</td><td>möchte</td><td>möchten</td><td>möchtet</td><td>möchten</td><td>想要、希望</td></tr><tr><td>sollen</td><td>soll</td><td>sollst</td><td>soll</td><td>sollen</td><td>sollt</td><td>sollen</td><td>应该、被要求</td></tr><tr><td>wollen</td><td>will</td><td>willst</td><td>will</td><td>wollen</td><td>wollt</td><td>wollen</td><td>想要、打算</td></tr><tr><td>dürfen</td><td>darf</td><td>darfst</td><td>darf</td><td>dürfen</td><td>dürft</td><td>dürfen</td><td>被允许、可以</td></tr><tr><td>müssen</td><td>muss</td><td>musst</td><td>muss</td><td>müssen</td><td>müsst</td><td>müssen</td><td>必须、不得不</td></tr></tbody></table></div>
+<h3 id="grammar-2-例句">例句</h3>
+<ul><li>Ich kann den Drucker benutzen. 我会使用打印机。</li><li>Möchtest du einen Kaffee? 你想喝一杯咖啡吗？</li><li>Er soll heute im Büro lernen. 他今天应该在办公室学习。</li><li>Wir wollen Deutsch sprechen. 我们想说德语。</li><li>Darf ich das Fenster öffnen? 我可以打开窗户吗？</li><li>Sie müssen die E-Mail schreiben. 您必须写这封邮件。</li></ul>
+<h3 id="grammar-2-语序提醒">语序提醒</h3>
+<ul><li>陈述句：Ich <strong>muss</strong> heute Deutsch <strong>lernen</strong>.</li><li>一般疑问句：<strong>Kannst</strong> du den Monitor <strong>sehen</strong>?</li><li>特殊疑问句：Wann <strong>willst</strong> du die Aufgabe <strong>machen</strong>?</li><li>否定：Ich <strong>darf</strong> hier nicht <strong>rauchen</strong>.</li></ul>
+    </div>
+  </article>
+      </div>
+    </section>
+<section class="module-section" data-module-section="expression" id="expression">
+      <header class="section-header">
+        <p class="kicker">3 个内容块</p>
+        <h2>表达模块</h2>
+      </header>
+      <div class="module-grid">
+        <article class="module-card" data-module="expression" data-date="2026-06-16" id="source-0-expression">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-16 · 0616语法-介词及现在完成时-deepseek.md</p>
+      <h3>德语 A1 复习笔记：介词与现在完成时</h3>
+      <span>表达</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：介词与现在完成时 表达目录"><a class="level-3" href="#expression-0-介词例句">介词例句</a><a class="level-3" href="#expression-0-静三动四对比例句">静三动四对比例句</a><a class="level-3" href="#expression-0-现在完成时句式示例">现在完成时句式示例</a></nav>
+    <div class="markdown-body">
+      <h3 id="expression-0-介词例句">介词例句</h3>
+<ul><li>Ich komme <strong>aus der</strong> Türkei.（我来自土耳其。）</li><li>Ich wohne <strong>bei meinem</strong> Bruder.（我住在我哥哥那里。）</li><li>Ich fahre <strong>mit dem</strong> Bus.（我坐公交车。）</li><li>Die Blumen sind <strong>für meinen</strong> Vater.（花是给我父亲的。）</li><li>Wir spazieren <strong>durch den</strong> Park.（我们穿过公园散步。）</li><li>Die Bank ist <strong>dem Bahnhof gegenüber</strong>.（银行在火车站对面。）</li></ul>
+<h3 id="expression-0-静三动四对比例句">静三动四对比例句</h3>
+<ul><li>Das Bild hängt <strong>an der</strong> Wand.（画挂在墙上。）</li><li>Ich hänge das Bild <strong>an die</strong> Wand.（我把画挂到墙上。）</li><li>Ich bin <strong>im</strong> Büro.（我在办公室里。）</li><li>Ich gehe <strong>ins</strong> Büro.（我走进办公室。）</li></ul>
+<h3 id="expression-0-现在完成时句式示例">现在完成时句式示例</h3>
+<ul><li>Gestern <strong>habe</strong> ich meine Hausaufgaben <strong>gemacht</strong>.（我昨天做了作业。）</li><li>Er <strong>ist</strong> nach Berlin <strong>gefahren</strong>.（他去了柏林。）</li><li>Ich <strong>habe</strong> ein Buch <strong>gelesen</strong>.（我读了一本书。）</li><li>Ich habe ihn <strong>nicht</strong> gesehen.（我没有看见他。）</li></ul>
+<p>常用缩写：</p>
+<ul><li><code>in dem = im</code></li><li><code>in das = ins</code></li><li><code>an dem = am</code></li><li><code>an das = ans</code></li><li><code>auf das = aufs</code></li><li><code>zu dem = zum</code></li><li><code>zu der = zur</code></li></ul>
+    </div>
+  </article>
+<article class="module-card" data-module="expression" data-date="2026-06-25" id="source-1-expression">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-25 · 0625表达-交通与位置-序数词-deepseek.md</p>
+      <h3>德语 A1 复习笔记：交通方式、位置表达与序数词</h3>
+      <span>表达</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：交通方式、位置表达与序数词 表达目录"><a class="level-3" href="#expression-1-如何表达出行方式">如何表达出行方式</a><a class="level-3" href="#expression-1-提问和回答时间">提问和回答时间</a><a class="level-3" href="#expression-1-提问和回答距离">提问和回答距离</a><a class="level-3" href="#expression-1-提问和回答位置与方向">提问和回答位置与方向</a><a class="level-3" href="#expression-1-使用序数词表达日期-楼层和顺序">使用序数词表达日期、楼层和顺序</a></nav>
+    <div class="markdown-body">
+      <h3 id="expression-1-如何表达出行方式">如何表达出行方式</h3>
+<div class="table-wrap"><table><thead><tr><th>句型</th><th>含义</th></tr></thead><tbody><tr><td><strong>Wie kommst du zur Arbeit?</strong></td><td>你怎么去上班？</td></tr><tr><td>Ich fahre <strong>mit dem Bus / Auto / Fahrrad</strong>.</td><td>我乘公交车/开车/骑自行车去。</td></tr><tr><td>Ich nehme <strong>die U-Bahn / den Bus</strong>.</td><td>我坐地铁/公交车。</td></tr><tr><td>Ich gehe <strong>zu Fuß</strong>.</td><td>我步行去。</td></tr><tr><td>Ich fliege <strong>mit dem Flugzeug</strong>.</td><td>我乘飞机去。</td></tr></tbody></table></div>
+<h3 id="expression-1-提问和回答时间">提问和回答时间</h3>
+<div class="table-wrap"><table><thead><tr><th>问题</th><th>含义</th></tr></thead><tbody><tr><td><strong>Wie lange dauert die Fahrt?</strong></td><td>行程需要多长时间？</td></tr><tr><td><strong>Wann fährt der Zug ab?</strong></td><td>火车什么时候出发？</td></tr><tr><td><strong>Wann kommt der Bus an?</strong></td><td>公交车什么时候到达？</td></tr><tr><td><strong>Um wie viel Uhr beginnt die Fahrt?</strong></td><td>几点开始行程？</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>回答</th><th>含义</th></tr></thead><tbody><tr><td>Die Fahrt dauert <strong>30 Minuten</strong>.</td><td>行程持续 30 分钟。</td></tr><tr><td>Der Zug fährt <strong>um 8:30 Uhr</strong> ab.</td><td>火车 8:30 出发。</td></tr><tr><td>Der Bus kommt <strong>in 10 Minuten</strong> an.</td><td>公交车 10 分钟后到。</td></tr><tr><td>Die Fahrt beginnt <strong>um Viertel vor neun</strong>.</td><td>行程 8:45 开始。</td></tr></tbody></table></div>
+<h3 id="expression-1-提问和回答距离">提问和回答距离</h3>
+<div class="table-wrap"><table><thead><tr><th>问题</th><th>含义</th></tr></thead><tbody><tr><td><strong>Wie weit ist es bis zum Bahnhof?</strong></td><td>到火车站有多远？</td></tr><tr><td><strong>Wie viele Kilometer sind es von hier nach Berlin?</strong></td><td>从这里到柏林多少公里？</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>回答</th><th>含义</th></tr></thead><tbody><tr><td>Es ist <strong>etwa 2 Kilometer</strong> entfernt.</td><td>大约 2 公里远。</td></tr><tr><td>Das sind <strong>ungefähr 500 Meter</strong>.</td><td>大约 500 米。</td></tr><tr><td>Von hier nach Berlin sind es <strong>600 Kilometer</strong>.</td><td>从这里到柏林 600 公里。</td></tr></tbody></table></div>
+<h3 id="expression-1-提问和回答位置与方向">提问和回答位置与方向</h3>
+<div class="table-wrap"><table><thead><tr><th>问题</th><th>含义</th></tr></thead><tbody><tr><td><strong>Wo ist die Bushaltestelle?</strong></td><td>公交车站在哪里？</td></tr><tr><td><strong>Wo befindet sich der Bahnhof?</strong></td><td>火车站在哪里？</td></tr><tr><td><strong>Wie komme ich zum Flughafen?</strong></td><td>我怎么去机场？</td></tr><tr><td><strong>In welche Richtung muss ich gehen?</strong></td><td>我应该往哪个方向走？</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>回答</th><th>含义</th></tr></thead><tbody><tr><td>Die Bushaltestelle ist <strong>neben dem Supermarkt</strong>.</td><td>公交车站在超市旁边。</td></tr><tr><td>Der Bahnhof befindet sich <strong>im Stadtzentrum</strong>.</td><td>火车站位于市中心。</td></tr><tr><td>Gehen Sie <strong>geradeaus</strong>, dann <strong>links</strong>.</td><td>您直走，然后左转。</td></tr><tr><td>Fahren Sie <strong>mit der U-Bahn-Linie 2</strong> bis Haltestelle &quot;Alexanderplatz&quot;.</td><td>您坐地铁 2 号线到 Alexanderplatz 站。</td></tr></tbody></table></div>
+<h3 id="expression-1-使用序数词表达日期-楼层和顺序">使用序数词表达日期、楼层和顺序</h3>
+<ul><li>Heute ist <strong>der fünfte Mai</strong>.（今天是五月五日。）</li><li>Ich habe <strong>am ersten Juli</strong> Geburtstag.（我七月一日生日。）</li><li>Mein Büro ist <strong>im vierten Stock</strong>.（我的办公室在四楼。）</li><li>Die Wohnung liegt <strong>im zweiten Stock</strong>.（公寓在二楼。）</li><li>Das ist <strong>mein erstes Auto</strong>.（这是我的第一辆车。）</li><li>Er ist <strong>der dritte Kunde</strong> heute.（他是今天第三位顾客。）</li><li>Wer ist <strong>der Erste</strong> in der Reihe?（谁排在队伍的第一个？）</li></ul>
+    </div>
+  </article>
+<article class="module-card" data-module="expression" data-date="2026-06-27" id="source-2-expression">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-27 · 0627.md</p>
+      <h3>德语 A1 复习笔记：办公室物品、情态动词与日期表达</h3>
+      <span>表达</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：办公室物品、情态动词与日期表达 表达目录"><a class="level-3" href="#expression-2-用介词说明物品位置">用介词说明物品位置</a><a class="level-3" href="#expression-2-询问和回答位置">询问和回答位置</a><a class="level-3" href="#expression-2-询问和表达日期">询问和表达日期</a></nav>
+    <div class="markdown-body">
+      <h3 id="expression-2-用介词说明物品位置">用介词说明物品位置</h3>
+<p>A1 阶段先记住这些常用位置表达。描述静态位置时，常用三格形式，例如 <code>auf dem Tisch</code>、<code>in der Tasche</code>。</p>
+<div class="table-wrap"><table><thead><tr><th>Deutsch</th><th>中文</th><th>Beispiel</th></tr></thead><tbody><tr><td>auf</td><td>在……上面</td><td>Die Maus liegt auf dem Tisch.</td></tr><tr><td>unter</td><td>在……下面</td><td>Das Papier liegt unter dem Buch.</td></tr><tr><td>in</td><td>在……里面</td><td>Der Stift ist in der Tasche.</td></tr><tr><td>vor</td><td>在……前面</td><td>Der Stuhl steht vor dem Tisch.</td></tr><tr><td>hinter</td><td>在……后面</td><td>Das Regal steht hinter dem Stuhl.</td></tr><tr><td>neben</td><td>在……旁边</td><td>Der Drucker steht neben dem Schrank.</td></tr><tr><td>zwischen</td><td>在……之间</td><td>Die Pflanze steht zwischen dem Fenster und dem Tisch.</td></tr><tr><td>an</td><td>在……边上、墙上</td><td>Die Uhr hängt an der Wand.</td></tr><tr><td>über</td><td>在……上方</td><td>Die Lampe hängt über dem Tisch.</td></tr></tbody></table></div>
+<h3 id="expression-2-询问和回答位置">询问和回答位置</h3>
+<ul><li>Wo ist der Monitor? - Der Monitor steht auf dem Tisch.</li><li>Wo liegt die Maus? - Die Maus liegt neben der Tastatur.</li><li>Wo ist der Drucker? - Der Drucker steht neben dem Schrank.</li><li>Wo ist die Pflanze? - Die Pflanze steht am Fenster.</li><li>Ist der Stift in der Tasche? - Ja, der Stift ist in der Tasche.</li><li>Liegt das Buch auf dem Tisch? - Nein, es liegt unter dem Heft.</li></ul>
+<h3 id="expression-2-询问和表达日期">询问和表达日期</h3>
+<div class="table-wrap"><table><thead><tr><th>Frage</th><th>Antwort</th></tr></thead><tbody><tr><td>Welches Datum ist heute?</td><td>Heute ist der 27. Juni 2026.</td></tr><tr><td>Der Wievielte ist heute?</td><td>Heute ist der siebenundzwanzigste Juni.</td></tr><tr><td>Wann ist der Termin?</td><td>Der Termin ist am 27. Juni.</td></tr><tr><td>Wann hast du Deutschkurs?</td><td>Ich habe am Montag Deutschkurs.</td></tr><tr><td>Wann ist dein Geburtstag?</td><td>Mein Geburtstag ist am 3. Oktober.</td></tr></tbody></table></div>
+<p>日期表达常用 <code>am + 序数词 + 月份</code>：</p>
+<ul><li>am ersten Januar</li><li>am dritten Oktober</li><li>am siebenundzwanzigsten Juni</li><li>Der Termin ist am 27.06.2026.</li></ul>
+    </div>
+  </article>
+      </div>
+    </section>
+<section class="module-section" data-module-section="quiz" id="quiz">
+      <header class="section-header">
+        <p class="kicker">3 个内容块</p>
+        <h2>测试题模块</h2>
+      </header>
+      <div class="module-grid">
+        <article class="module-card" data-module="quiz" data-date="2026-06-16" id="source-0-quiz">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-16 · 0616语法-介词及现在完成时-deepseek.md</p>
+      <h3>德语 A1 复习笔记：介词与现在完成时</h3>
+      <span>测试题</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：介词与现在完成时 测试题目录"><a class="level-3" href="#quiz-0-介词与变格">介词与变格</a><a class="level-3" href="#quiz-0-现在完成时">现在完成时</a><a class="level-3" href="#quiz-0-自我复习建议">自我复习建议</a></nav>
+    <div class="markdown-body">
+      <h3 id="quiz-0-介词与变格">介词与变格</h3>
+<ol><li>填空：Ich fahre ___ dem Bus.（mit）</li><li>填空：Die Blumen sind ___ meinen Vater.（für）</li><li>判断用三格还是四格：Ich gehe in ___ Büro.（das / dem）</li><li>判断用三格还是四格：Ich bin in ___ Büro.（das / dem）</li></ol>
+<h3 id="quiz-0-现在完成时">现在完成时</h3>
+<ol><li>写出 <code>machen</code> 的第二分词。</li><li>写出 <code>gehen</code> 的第二分词，并说明助动词用 <code>haben</code> 还是 <code>sein</code>。</li><li>翻译：我昨天买了面包。</li><li>翻译：他去了柏林。</li></ol>
+<h3 id="quiz-0-自我复习建议">自我复习建议</h3>
+<ol><li>用身边物品练习“静三动四”：放在哪里、放到哪里。</li><li>把不规则动词的第二分词做成小卡片。</li><li>用现在完成时写 5 句今天做过的事情。</li></ol>
+    </div>
+  </article>
+<article class="module-card" data-module="quiz" data-date="2026-06-25" id="source-1-quiz">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-25 · 0625表达-交通与位置-序数词-deepseek.md</p>
+      <h3>德语 A1 复习笔记：交通方式、位置表达与序数词</h3>
+      <span>测试题</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：交通方式、位置表达与序数词 测试题目录"><a class="level-3" href="#quiz-1-交通方式">交通方式</a><a class="level-3" href="#quiz-1-时间-距离和位置">时间、距离和位置</a><a class="level-3" href="#quiz-1-序数词">序数词</a></nav>
+    <div class="markdown-body">
+      <h3 id="quiz-1-交通方式">交通方式</h3>
+<ol><li>你怎么去学校？用 <code>Bus</code> 回答。</li><li>你怎么去机场？用 <code>U-Bahn</code> 回答。</li><li>把句子补完整：Ich fahre ___ dem Fahrrad.</li></ol>
+<h3 id="quiz-1-时间-距离和位置">时间、距离和位置</h3>
+<ol><li>到火车站有多远？用 3 公里回答。</li><li>行程需要多长时间？用 45 分钟回答。</li><li>公交车站在哪里？用“在超市旁边”回答。</li></ol>
+<h3 id="quiz-1-序数词">序数词</h3>
+<ol><li>写出下列基数词对应的序数词：4, 7, 3, 20, 1</li><li>翻译：今天是五月十日。</li><li>翻译：我住在三楼。</li></ol>
+    </div>
+  </article>
+<article class="module-card" data-module="quiz" data-date="2026-06-27" id="source-2-quiz">
+    <header class="module-card-header">
+      <p class="kicker">2026-06-27 · 0627.md</p>
+      <h3>德语 A1 复习笔记：办公室物品、情态动词与日期表达</h3>
+      <span>测试题</span>
+    </header>
+    <nav class="toc compact" aria-label="德语 A1 复习笔记：办公室物品、情态动词与日期表达 测试题目录"><a class="level-3" href="#quiz-2-词汇练习">词汇练习</a><a class="level-3" href="#quiz-2-情态动词练习">情态动词练习</a><a class="level-3" href="#quiz-2-位置表达练习">位置表达练习</a><a class="level-3" href="#quiz-2-日期表达练习">日期表达练习</a></nav>
+    <div class="markdown-body">
+      <h3 id="quiz-2-词汇练习">词汇练习</h3>
+<ol><li>翻译：显示器、打印机、植物、键盘、文件夹。</li><li>用 <code>sehr</code> 造句，描述一个办公室物品。</li><li>用 <code>nur</code> 造句，表达“我只有一支笔”。</li></ol>
+<h3 id="quiz-2-情态动词练习">情态动词练习</h3>
+<ol><li>Ich ___ heute Deutsch lernen. (müssen)</li><li>___ du den Drucker benutzen? (können)</li><li>Wir ___ im Büro sprechen. (dürfen)</li><li>Er ___ eine E-Mail schreiben. (sollen)</li><li>Ich ___ einen Kaffee trinken. (möchten)</li><li>Sie ___ am Montag kommen. (wollen)</li></ol>
+<h3 id="quiz-2-位置表达练习">位置表达练习</h3>
+<ol><li>翻译：鼠标在键盘旁边。</li><li>翻译：植物在窗边。</li><li>回答：Wo ist das Buch? 使用 <code>auf dem Tisch</code>。</li><li>回答：Wo steht der Drucker? 使用 <code>neben dem Schrank</code>。</li></ol>
+<h3 id="quiz-2-日期表达练习">日期表达练习</h3>
+<ol><li>用德语回答：今天是 2026 年 6 月 27 日。</li><li>翻译：约会在 10 月 3 日。</li><li>问句翻译：今天几号？</li></ol>
+    </div>
+  </article>
+      </div>
+    </section>
+    <p class="empty-state">没有匹配当前筛选条件的内容。</p>
   </main>
 
   <footer>
     <div class="footer-inner">Built from Markdown notes for GitHub Pages.</div>
   </footer>
+  <script>
+    const filterButtons = [...document.querySelectorAll("[data-module-filter]")];
+    const dateFilter = document.querySelector(".date-filter");
+    const moduleCards = [...document.querySelectorAll(".module-card")];
+    const moduleSections = [...document.querySelectorAll("[data-module-section]")];
+    const emptyState = document.querySelector(".empty-state");
+    let activeModule = "all";
+
+    function applyFilters() {
+      const activeDate = dateFilter.value;
+      let visibleCount = 0;
+
+      moduleCards.forEach((card) => {
+        const matchesModule = activeModule === "all" || card.dataset.module === activeModule;
+        const matchesDate = activeDate === "all" || card.dataset.date === activeDate;
+        const isVisible = matchesModule && matchesDate;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      moduleSections.forEach((section) => {
+        const visibleCards = section.querySelectorAll(".module-card:not([hidden])").length;
+        section.hidden = visibleCards === 0;
+      });
+
+      emptyState.classList.toggle("is-visible", visibleCount === 0);
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeModule = button.dataset.moduleFilter;
+        filterButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+        applyFilters();
+      });
+    });
+
+    dateFilter.addEventListener("change", applyFilters);
+  </script>
 </body>
 </html>
